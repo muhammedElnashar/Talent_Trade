@@ -4,7 +4,7 @@
             <div class="logo-header" data-background-color="dark">
                 <a href="index.html" class="logo">
                     <img
-                        src="assets/img/kaiadmin/logo_light.svg"
+                        src={{asset("assets/img/kaiadmin/logo_light.svg")}}
                         alt="navbar brand"
                         class="navbar-brand"
                         height="20"
@@ -102,7 +102,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/jm_denis.jpg"
+                                                    src={{asset("assets/img/jm_denis.jpg")}}
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -115,7 +115,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/chadengle.jpg"
+                                                    src={{asset("assets/img/chadengle.jpg")}}
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -128,7 +128,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/mlane.jpg"
+                                                    src={{asset("assets/img/mlane.jpg")}}
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -143,7 +143,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/talha.jpg"
+                                                    src={{asset("assets/img/talha.jpg")}}
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -211,7 +211,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/profile2.jpg"
+                                                    src={{asset("assets/img/profile2.jpg")}}
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -319,77 +319,6 @@
                             </div>
                         </div>
                     </li>
-                 {{--   @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                <div class="avatar-sm">
-                                    <img
-                                        src="assets/img/profile.jpg"
-                                        alt="..."
-                                        class="avatar-img rounded-circle"
-                                    />
-                                </div>
-                                <span class="profile-username">
-                      <span class="op-7">Hi,</span>
-                                <span class="fw-bold">  {{ Auth::user()->name }}</span>
-                    </span>
-                            </a>
-
-                            <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                <div class="dropdown-user-scroll scrollbar-outer">
-                                    <li>
-                                        <div class="user-box">
-                                            <div class="avatar-lg">
-                                                <img
-                                                    src="assets/img/profile.jpg"
-                                                    alt="image profile"
-                                                    class="avatar-img rounded"
-                                                />
-                                            </div>
-                                            <div class="u-text">
-                                                <h4>Hizrian</h4>
-                                                <p class="text-muted">hello@example.com</p>
-                                                <a
-                                                    href="profile.html"
-                                                    class="btn btn-xs btn-secondary btn-sm"
-                                                >View Profile</a
-                                                >
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">My Profile</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li>
-
-                                </div>
-                            </ul>
-
-
-                        </li>
-                    @endguest--}}
                     @guest
                         @if (Route::has('login'))
                             <li class="nav-item">
@@ -412,7 +341,7 @@
                         >
                             <div class="avatar-sm">
                                 <img
-                                    src="assets/img/profile.jpg"
+                                    src={{asset("assets/img/profile.jpg")}}
                                     alt="..."
                                     class="avatar-img rounded-circle"
                                 />
@@ -428,7 +357,7 @@
                                     <div class="user-box">
                                         <div class="avatar-lg">
                                             <img
-                                                src="assets/img/profile.jpg"
+                                                src={{asset("assets/img/profile.jpg")}}
                                                 alt="image profile"
                                                 class="avatar-img rounded"
                                             />
