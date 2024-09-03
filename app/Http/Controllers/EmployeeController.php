@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -21,7 +23,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('employee.create');
     }
 
     /**
@@ -29,7 +31,18 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        //
+        if ($request->hasFile("logo")){
+            $logo = $request->file("logo");
+            $logoPath = $logo->store("logo","user_image");
+        }
+        $data = $request->all();
+        $data['logo'] = $logoPath;
+        Employee::create($data);
+        $user = User::findorfail(Auth::id());
+        $user['role']="employee";
+        $user->save();
+        return redirect()->route('employeeDashboard');
+
     }
 
     /**

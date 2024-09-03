@@ -113,7 +113,7 @@
                                 </p>
                             </div>
                         </div>
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group mt-3">
                                 <input id="email" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required >
@@ -132,6 +132,11 @@
                                 <input id="password_confirmation" type="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
                                 <label class="form-control-placeholder" for="password_confirmation">Confirm Password</label>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control" name="image">
+                                <label class="input-group-text"  for="inputGroupFile02">Image</label>
                             </div>
 
                             <div class="form-group">

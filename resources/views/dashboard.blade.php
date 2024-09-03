@@ -2,7 +2,7 @@
 <!-- Sidebar -->
 @include("layouts.sidebar")
 <!-- End Sidebar -->
-<div class="main-panel">
+    <div class="main-panel">
     @include("layouts.header")
 @yield("content")
     <!-- Custom template | don't include it in your project! -->
