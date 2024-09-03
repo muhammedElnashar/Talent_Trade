@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateJobPostRequest;
 use App\Models\JobPost;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Comment;
 
 class JobPostController extends Controller
 {
@@ -48,10 +49,10 @@ class JobPostController extends Controller
      */
     public function show(JobPost $jobPost)
     {
-        return view('JobPosts.show', [
-            'jopPost' => $jobPost
-        ]);
-    }
+        $comments =  Comment::where('job_post_id', $jobPost->id)->get();
+        // dd($jobPost);
+        return view('JobPosts.show', compact('jobPost', 'comments'));
+     }
 
     /**
      * Show the form for editing the specified resource.
