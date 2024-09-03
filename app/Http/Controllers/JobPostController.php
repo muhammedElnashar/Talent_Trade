@@ -13,7 +13,9 @@ class JobPostController extends Controller
      */
     public function index()
     {
-        //
+        return view('jopPosts.index', [
+            'jopPosts' => JobPost::all()
+        ]);
     }
 
     /**
@@ -21,7 +23,7 @@ class JobPostController extends Controller
      */
     public function create()
     {
-        //
+        return view('jopPosts.create');
     }
 
     /**
@@ -29,7 +31,8 @@ class JobPostController extends Controller
      */
     public function store(StoreJobPostRequest $request)
     {
-        //
+
+        return redirect()->route('jopPosts.index');
     }
 
     /**
@@ -37,7 +40,9 @@ class JobPostController extends Controller
      */
     public function show(JobPost $jobPost)
     {
-        //
+        return view('jopPosts.show', [
+            'jopPost' => $jobPost
+        ]);
     }
 
     /**
@@ -45,7 +50,9 @@ class JobPostController extends Controller
      */
     public function edit(JobPost $jobPost)
     {
-        //
+        return view('jopPosts.edit', [
+            'jopPost' => $jobPost
+        ]);
     }
 
     /**
@@ -53,7 +60,7 @@ class JobPostController extends Controller
      */
     public function update(UpdateJobPostRequest $request, JobPost $jobPost)
     {
-        //
+        return redirect()->route('jopPosts.index');
     }
 
     /**
@@ -61,6 +68,6 @@ class JobPostController extends Controller
      */
     public function destroy(JobPost $jobPost)
     {
-        //
+        return redirect()->route('jopPosts.index');
     }
 }
