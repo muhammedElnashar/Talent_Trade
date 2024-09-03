@@ -13,8 +13,8 @@ class JobPostController extends Controller
      */
     public function index()
     {
-        return view('jopPosts.index', [
-            'jopPosts' => JobPost::all()
+        return view('JobPosts.index', [
+            'JobPosts' => JobPost::all()
         ]);
     }
 
@@ -23,7 +23,7 @@ class JobPostController extends Controller
      */
     public function create()
     {
-        return view('jopPosts.create');
+        return view('JobPosts.create');
     }
 
     /**
@@ -32,7 +32,7 @@ class JobPostController extends Controller
     public function store(StoreJobPostRequest $request)
     {
 
-        return redirect()->route('jopPosts.index');
+        return redirect()->route('JobPosts.index');
     }
 
     /**
@@ -40,7 +40,7 @@ class JobPostController extends Controller
      */
     public function show(JobPost $jobPost)
     {
-        return view('jopPosts.show', [
+        return view('JobPosts.show', [
             'jopPost' => $jobPost
         ]);
     }
@@ -50,8 +50,8 @@ class JobPostController extends Controller
      */
     public function edit(JobPost $jobPost)
     {
-        return view('jopPosts.edit', [
-            'jopPost' => $jobPost
+        return view('JobPosts.edit', [
+            'jobPost' => $jobPost
         ]);
     }
 
@@ -60,7 +60,7 @@ class JobPostController extends Controller
      */
     public function update(UpdateJobPostRequest $request, JobPost $jobPost)
     {
-        return redirect()->route('jopPosts.index');
+        return redirect()->route('JobPosts.index');
     }
 
     /**
@@ -68,6 +68,6 @@ class JobPostController extends Controller
      */
     public function destroy(JobPost $jobPost)
     {
-        return redirect()->route('jopPosts.index');
+        return redirect()->route('JobPosts.index');
     }
 }
