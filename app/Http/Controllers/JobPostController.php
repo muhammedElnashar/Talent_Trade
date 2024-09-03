@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreJobPostRequest;
 use App\Http\Requests\UpdateJobPostRequest;
 use App\Models\JobPost;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class JobPostController extends Controller
 {
@@ -13,9 +15,7 @@ class JobPostController extends Controller
      */
     public function index()
     {
-        return view('JobPosts.index', [
-            'JobPosts' => JobPost::all()
-        ]);
+        return view('JobPosts.index');
     }
 
     /**
@@ -23,7 +23,10 @@ class JobPostController extends Controller
      */
     public function create()
     {
-        return view('JobPosts.create');
+        $jobPosts = JobPost::all();
+        $categories = Category::all();
+
+        return view('JobPosts.create', compact('jobPosts','categories'));
     }
 
     /**
@@ -31,8 +34,13 @@ class JobPostController extends Controller
      */
     public function store(StoreJobPostRequest $request)
     {
+        $request_data=$request->all();
+        $request_data['employee_id']=Auth::user()->id;
+        $request_data['category_id']=Auth::user()->id;
 
-        return redirect()->route('JobPosts.index');
+        $jobPost =JobPost::create($request_data);
+
+        return redirect()->route('jobPosts.index', compact('jobPost'));
     }
 
     /**
