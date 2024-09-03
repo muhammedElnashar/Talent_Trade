@@ -341,7 +341,7 @@
                         >
                             <div class="avatar-sm">
                                 <img
-                                    src={{asset("assets/img/profile.jpg")}}
+                                    src={{asset("images/users/".Auth::user()->image)}}
                                     alt="..."
                                     class="avatar-img rounded-circle"
                                 />
