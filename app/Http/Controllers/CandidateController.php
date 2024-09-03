@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
 use App\Models\Candidate;
+use App\Models\User;
 
+use Illuminate\Support\Facades\Auth;
 class CandidateController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        //
+        $candidates = Candidate::all();
+        return view('candidate.index', compact('candidates'));
     }
 
     /**
@@ -35,9 +38,10 @@ class CandidateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Candidate $candidate)
+    public function show(Candidate $candidate ,$id )
     {
-        //
+        $candidate = Candidate::findOrFail($id);  
+        return view('candidate.show' ,compact('candidate'));
     }
 
     /**
