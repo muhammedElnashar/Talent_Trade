@@ -17,7 +17,8 @@ class JobPostController extends Controller
      */
     public function index()
     {
-        return view('JobPosts.index');
+        $JobPosts = JobPost::all();
+        return view('JobPosts.index', compact('JobPosts'));
     }
 
     /**
