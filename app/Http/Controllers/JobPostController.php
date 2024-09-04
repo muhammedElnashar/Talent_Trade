@@ -85,6 +85,7 @@ class JobPostController extends Controller
      */
     public function destroy(JobPost $jobPost)
     {
+        $jobPost->delete();
         return redirect()->route('JobPosts.index');
     }
 }
