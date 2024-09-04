@@ -73,7 +73,7 @@ class JobPostController extends Controller
         $request_data['employee_id']=Auth::user()->id;
         $request_data['category_id']=Auth::user()->id;
         $jobPost->update($request_data);
-        return redirect()->route('jobPosts.index', compact('jobPost'))->with('success', 'Job post updated successfully');
+        return redirect()->route('jobPosts.index', compact('jobPost')->with('success', 'Job post updated successfully');
     }
 
     /**
