@@ -19,7 +19,7 @@ jobPostShow
             <p class="card-text">Salary: {{$jobPost->salary}}</p>
             <p class="card-text">Location: {{$jobPost->location}}</p>
             <p class="card-text">{{$jobPost->work_type}}</p>
-            <p class="card-text">{{$jobPost->category}}</p>
+{{--            <p class="card-text">{{$jobPost->category}}</p>--}}
             <p class="card-text">{{$jobPost->dead_line}}</p>
             <a href="/jobPosts" class="btn btn-primary">GO Back</a>
         </div>

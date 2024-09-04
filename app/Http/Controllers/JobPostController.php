@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreJobPostRequest;
 use App\Http\Requests\UpdateJobPostRequest;
 use App\Models\JobPost;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
 use App\Models\User;
 
@@ -15,9 +17,7 @@ class JobPostController extends Controller
      */
     public function index()
     {
-        return view('JobPosts.index', [
-            'JobPosts' => JobPost::all()
-        ]);
+        return view('JobPosts.index');
     }
 
     /**
@@ -25,7 +25,10 @@ class JobPostController extends Controller
      */
     public function create()
     {
-        return view('JobPosts.create');
+        $jobPosts = JobPost::all();
+        $categories = Category::all();
+
+        return view('JobPosts.create', compact('jobPosts','categories'));
     }
 
     /**
@@ -33,8 +36,13 @@ class JobPostController extends Controller
      */
     public function store(StoreJobPostRequest $request)
     {
+        $request_data=$request->all();
+        $request_data['employee_id']=Auth::user()->id;
+        $request_data['category_id']=Auth::user()->id;
 
-        return redirect()->route('JobPosts.index');
+        $jobPost =JobPost::create($request_data);
+
+        return  redirect()->route('jobPosts.index', compact('jobPost'));
     }
 
     /**
@@ -54,9 +62,9 @@ class JobPostController extends Controller
      */
     public function edit(JobPost $jobPost)
     {
-        return view('JobPosts.edit', [
-            'jobPost' => $jobPost
-        ]);
+        $categories = Category::all();
+
+        return view('JobPosts.update', compact('jobPost', 'categories'));
     }
 
     /**
@@ -64,7 +72,11 @@ class JobPostController extends Controller
      */
     public function update(UpdateJobPostRequest $request, JobPost $jobPost)
     {
-        return redirect()->route('JobPosts.index');
+        $request_data=$request->all();
+        $request_data['employee_id']=Auth::user()->id;
+        $request_data['category_id']=Auth::user()->id;
+        $jobPost->update($request_data);
+        return redirect()->route('jobPosts.index', compact('jobPost'))->with('success', 'Job post updated successfully');
     }
 
     /**
