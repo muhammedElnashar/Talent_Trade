@@ -1,32 +1,121 @@
+
+
+
+
 @extends("dashboard")
 
 @section("title")
-jopPost
+    Test
 @endsection
 @section("css")
+<style>
+  .card {
+    border: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 1rem 1.5rem;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    border-top: none;
+    padding: 0.75rem 1.5rem;
+}
+
+.card-footer .form-control {
+    border-radius: 20px;
+    border: 1px solid #ced4da;
+}
+
+.card-footer .btn {
+    border-radius: 20px;
+}
+
+.card-footer img {
+    width: 40px;
+    height: 40px;
+}
+
+.card-body img {
+    width: 40px;
+    height: 40px;
+}
+
+.card h6 {
+    font-weight: bold;
+}
+
+.card p {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.card small {
+    color: #888;
+}
+
+.card .btn-link {
+    color: #666;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card .btn-link:hover {
+    text-decoration: underline;
+}
+
+.card .btn-link i {
+    margin-right: 5px;
+}
+
+.card .text-muted {
+    color: #666 !important;
+}
+.styl{
+  width: 60px;
+    height: 60px;
+}
+</style>
 
 @endsection
 @section("content")
-<div class="container p-5 ms-5" style="margin-top: 7rem;width: 75%">
-<table class="table table-borderless">
-    @foreach ($JobPosts as $jobPost)
-    <tr class="p-5">
-    <div class="card">
-  <h5 class="card-header">Job #{{$jobPost->id }}</h5>
-  <div class="card-body">
-    <h5 class="card-title">{{ $jobPost->title }}</h5>
-    <p class="card-text">Description:
-        {{ $jobPost->description }}</p>
-    <p class="card-text">Salary: {{ $jobPost->salary }}</p>
-    <a href="{{ route('jobPosts.show', $jobPost->id) }}" class="btn btn-primary">More Details</a>
-
-  </div>
-</div>
-    </tr>
+@foreach ($JobPosts as $jobPost)
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card my-3" style="margin-top: 100px !important;">
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <img src="{{ asset('images/users/logo/'.$employees->find($jobPost->employee_id)->logo) }}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
+                            <div>
+                                <h3 class="m-0">{{ $employees->find($jobPost->employee_id)->company_name }}</h3>
+                                <small class="text-muted fs-6">{{ $jobPost->created_at->format('F j, Y, g:i a') }}</small>
+                            </div>
+                        </div>
+                        <a href="{{ route('jobPosts.show', $jobPost->id) }}">
+                            <h5 class="fs-4 text-black">{{ $jobPost->title }}</h5>
+                        </a>
+                        <p>{{ $jobPost->description }}</p>
+                        <div class="card-footer d-flex">
+                            <a href="{{ route('jobPosts.show', $jobPost->id) }}" class="btn btn-primary ms-auto">More Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endforeach
-</table>
-</div>
 @endsection
 @section("script")
 
 @endsection
+
+
+ <!-- <div class="d-flex">
+            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
+            <input type="text" class="form-control" placeholder="Write a comment...">
+            <button class="btn btn-primary ms-2">Comment</button>-->
+
+
+
+
