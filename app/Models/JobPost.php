@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class JobPost extends Model
 {
@@ -17,5 +18,9 @@ class JobPost extends Model
     public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class,'category_id');
+    }
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

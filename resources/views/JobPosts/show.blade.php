@@ -32,6 +32,7 @@ jobPostShow
         <form action="{{ route('comments.store') }}" method="POST" class="row row-cols-lg-auto g-3 align-items-center">
             @csrf
             <input type="hidden" name="job_post_id" value="{{$jobPost->id}}">
+            <input type="hidden" name="work_type" value="{{$jobPost->work_type}}">
             <div class="col-12">
                 <label class="visually-hidden" for="comment">Comment</label>
                 <div class="input-group">
@@ -40,7 +41,7 @@ jobPostShow
                 </div>
             </div>
             <div class="col-12">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Apply</button>
             </div>
         </form>
         @endauth
