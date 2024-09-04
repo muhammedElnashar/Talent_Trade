@@ -1,7 +1,7 @@
 @extends("dashboard")
 
 @section("title")
-    Test
+    Candidate Dashboard
 @endsection
 @section("css")
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\UpdateCandidateRequest;
 use App\Models\Candidate;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class CandidateController extends Controller
 {
@@ -21,7 +23,8 @@ class CandidateController extends Controller
      */
     public function create()
     {
-        //
+        return view('candidate.create');
+
     }
 
     /**
@@ -29,7 +32,18 @@ class CandidateController extends Controller
      */
     public function store(StoreCandidateRequest $request)
     {
-        //
+
+        if ($request->hasFile("cv")){
+            $cv = $request->file("cv");
+            $cvName = $cv->store("Cv","user_image");
+        }
+        $data = $request->all();
+        $data['cv'] = $cvName;
+        Candidate::create($data);
+        $user = User::findorfail(Auth::id());
+        $user['role']="candidate";
+        $user->save();
+        return redirect()->route('candidateDashboard');
     }
 
     /**

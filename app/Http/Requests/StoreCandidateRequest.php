@@ -11,7 +11,7 @@ class StoreCandidateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreCandidateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cv' => ['required', 'file', 'mimes:pdf,docx,doc'],
+            'about' => ['required'],
+            'user_id' => ['required', 'exists:users,id'],
         ];
     }
 }
