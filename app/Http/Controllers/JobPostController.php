@@ -6,6 +6,7 @@ use App\Http\Requests\StoreJobPostRequest;
 use App\Http\Requests\UpdateJobPostRequest;
 use App\Models\JobPost;
 use App\Models\Comment;
+use App\Models\User;
 
 class JobPostController extends Controller
 {
@@ -42,8 +43,10 @@ class JobPostController extends Controller
     public function show(JobPost $jobPost)
     {
         $comments =  Comment::where('job_post_id', $jobPost->id)->get();
+        $users = User::all();
+
         // dd($jobPost);
-        return view('JobPosts.show', compact('jobPost', 'comments'));
+        return view('JobPosts.show', compact('jobPost', 'comments', 'users'));
      }
 
     /**

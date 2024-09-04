@@ -51,6 +51,7 @@ jobPostShow
             @foreach($comments as $comment)
                 <div class="card mb-2">
                     <div class="card-body">
+                        <p class="card-text">{{ $users->find($comment->candidate_id)->name }}</p>
                         <p>{{ $comment->body }}</p>
                         <p class="text-muted">Posted on {{ $comment->created_at->format('F j, Y, g:i a') }}</p>
                     </div>
