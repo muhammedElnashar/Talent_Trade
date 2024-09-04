@@ -9,29 +9,29 @@
     }
 @endsection
 @section("content")
-
-    <form method="post" action="{{route('jobPosts.store')}}" enctype="multipart/form-data">
-        @csrf
+    <form action="{{route('jobPosts.update', $jobPost)}}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
         <div class="conatiner my-5 p-5">
             <div class="mb-3">
                 <label for="jobTitle" class="form-label">Job Title</label>
                 <input type="text" class="form-control" id="jobTitle" name="title" placeholder="Job Title">
                 @error('title')
-                <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                <div class="alert alert-danger  my-3">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Job Description</label>
                 <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
                 @error('description')
-                <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                <div class="alert alert-danger my-3">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
                 <label for="expectedSalary" class="form-label">Salary Expected</label>
                 <input type="text" name="" class="form-control" id="expectedSalary" placeholder="Expected Salary">
                 @error('salary')
-                <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                <div class="alert alert-danger my-3">{{ $message }}</div>
                 @enderror
             </div>
             <div class="row d-flex">
@@ -41,7 +41,7 @@
 
                     <input type="text" class="form-control" name="location"  placeholder="City" aria-label="City">
                     @error('location')
-                    <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                    <div class="alert alert-danger my-3">{{ $message }}</div>
                     @enderror
 
                 </div>
@@ -59,7 +59,7 @@
                 <label for="expectedSalary" class="form-label">Deadline</label>
                 <input type="date" name="dead_line" class="form-control" id="Deadline" placeholder="Deadline">
                 @error('dead_line')
-                <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                <div class="alert alert-danger my-3">{{ $message }}</div>
                 @enderror
             </div>
             <div class="col-4">
@@ -77,10 +77,15 @@
                 <div class="invalid-feedback">Example invalid form file feedback</div>
             </div>
             <div class="my-3">
-                <button class="btn btn-success" type="submit" >Create Job</button>
+                <button class="btn btn-success" type="submit" >Update Job</button>
             </div>
         </div>
+
+
+
     </form>
+
 @endsection
 @section("script")
+
 @endsection

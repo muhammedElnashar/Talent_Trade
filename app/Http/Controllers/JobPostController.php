@@ -41,7 +41,7 @@ class JobPostController extends Controller
 
         $jobPost =JobPost::create($request_data);
 
-        return redirect()->route('jobPosts.index', compact('jobPost'));
+        return  redirect()->route('jobPosts.index', compact('jobPost'));
     }
 
     /**
@@ -59,9 +59,9 @@ class JobPostController extends Controller
      */
     public function edit(JobPost $jobPost)
     {
-        return view('JobPosts.edit', [
-            'jobPost' => $jobPost
-        ]);
+        $categories = Category::all();
+
+        return view('JobPosts.update', compact('jobPost', 'categories'));
     }
 
     /**
@@ -69,7 +69,11 @@ class JobPostController extends Controller
      */
     public function update(UpdateJobPostRequest $request, JobPost $jobPost)
     {
-        return redirect()->route('JobPosts.index');
+        $request_data=$request->all();
+        $request_data['employee_id']=Auth::user()->id;
+        $request_data['category_id']=Auth::user()->id;
+        $jobPost->update($request_data);
+        return redirect()->route('jobPosts.index', compact('jobPost'))->with('success', 'Job post updated successfully');
     }
 
     /**
