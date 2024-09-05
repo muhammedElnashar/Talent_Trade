@@ -9,7 +9,7 @@
     />
     <link
         rel="icon"
-        href="{{asset("assets/img/kaiadmin/favicon.icon")}}"
+        href={{asset("assets/img/kaiadmin/favicon.ico")}}
         type="image/x-icon"
     />
 
@@ -26,5 +26,4 @@
     @stack("css")
 </head>
 <body>
-{{--<div class="wrapper">--}}
-d
+<div class="wrapper">

@@ -6,7 +6,7 @@
                     <img
                         src="{{asset("assets/img/kaiadmin/logo_light.svg")}}"
                         alt="navbar brand"
-                        class="navbar-brand"
+                        class=" navbar-brand"
                         height="20"
                     />
                 </a>
@@ -28,7 +28,7 @@
         <nav
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
         >
-            <div class="container-fluid">
+            <div class="container-fluid mx-5 ">
                 <nav
                     class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
                 >

@@ -38,22 +38,21 @@ class JobPostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreJobPostRequest $request, JobPost $jobPost)
+    public function store(StoreJobPostRequest $request)
     {
 
 
         $request_data=$request->all();
         $request_data['employee_id']=Auth::user()->id;
-      $jobPost =JobPost::create($request_data);
+        $jobPost =JobPost::create($request_data);
         $tech=$request_data['technology_id'];
         foreach ($tech as $technology) {
-                TechnologyJob::create([
+            TechnologyJob::create
+            ([
                     'technology_id' => $technology,
                     'job_post_id' => $jobPost->id
-                ]);
+            ]);
         }
-
-//        $jobTech=TechnologyJob::create();
         return  redirect()->route('jobPosts.index', compact('jobPost'));
     }
 
@@ -75,8 +74,9 @@ class JobPostController extends Controller
     public function edit(JobPost $jobPost)
     {
         $categories = Category::all();
+        $technologies = Technology::all();
 
-        return view('JobPosts.update', compact('jobPost', 'categories'));
+        return view('JobPosts.update', compact('jobPost', 'categories','technologies'));
     }
 
     /**
@@ -86,8 +86,17 @@ class JobPostController extends Controller
     {
         $request_data=$request->all();
         $request_data['employee_id']=Auth::user()->id;
-        $request_data['category_id']=Auth::user()->id;
-        $jobPost->update($request_data);
+//        $jobPost->update($request_data);
+        $tech=TechnologyJob::where('job_post_id', $jobPost->id)->get();
+        dd($tech);
+        foreach ($tech as $technology) {
+
+            TechnologyJob::update
+            ([
+                'technology_id' => $technology,
+                'job_post_id' => $jobPost->id
+            ]);
+        }
         return redirect()->route('jobPosts.index', compact('jobPost'))->with('success', 'Job post updated successfully');
     }
 
