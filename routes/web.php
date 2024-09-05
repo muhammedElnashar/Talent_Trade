@@ -1,20 +1,30 @@
 <?php
 
+use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\CandidateTechnologyController;
+use App\Http\Controllers\EmployeeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TechnologyController;
-use App\Http\Controllers\CandidateController;
 
 Route::get('/', function () {
-    return view('dashboard');
-});
-Route::get('/test', function () {
-    return view('test');
-});
-
+if (!Auth::check()){
+    return to_route('login');
+    }
+    return view('dashboard')
+    ;})->name("dashboard");
+Route::get('/test', function () {return view('test');});
 Auth::routes();
-
+Route::get('/adminDashboard', function () { return view('dashboard.admin') ;})->name("adminDashboard");
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('skills',TechnologyController::class);
 
-Route::resource('candidate',CandidateController::class);
+
+
+Route::get('/dashboard-role', function () {return view('auth/dashboard-role');})->name('dashboard_role');
+Route::resource('employee', EmployeeController::class);
+Route::resource('candidate', CandidateController::class);
+Route::resource('candidate-technology', CandidateTechnologyController::class);
+Route::get('/employeeDashboard', function () {return view('dashboard.employee');})->name("employeeDashboard");
+Route::get('/candidateDashboard', function () {return view('dashboard.candidate');})->name("candidateDashboard");

@@ -334,14 +334,14 @@
                     @else
                     <li class="nav-item topbar-user dropdown hidden-caret">
                         <a
-                            class="dropdown-toggle profile-pic"
+                            class="dropdown-toggle profile-pic me-5"
                             data-bs-toggle="dropdown"
                             href="#"
                             aria-expanded="false"
                         >
                             <div class="avatar-sm">
                                 <img
-                                    src={{asset("assets/img/profile.jpg")}}
+                                    src={{asset("images/users/".Auth::user()->image)}}
                                     alt="..."
                                     class="avatar-img rounded-circle"
                                 />
@@ -357,26 +357,37 @@
                                     <div class="user-box">
                                         <div class="avatar-lg">
                                             <img
-                                                src={{asset("assets/img/profile.jpg")}}
+                                            src={{asset("images/users/".Auth::user()->image)}}
                                                 alt="image profile"
                                                 class="avatar-img rounded"
                                             />
                                         </div>
                                         <div class="u-text">
                                             <h4>{{ Auth::user()->name }}</h4>
-                                            <p class="text-muted">{{ Auth::user()->email }}</p>
-                                            <a
-                                                href="profile.html"
-                                                class="btn btn-xs btn-secondary btn-sm"
-                                            >View Profile</a
-                                            >
+                                            <p class="text-muted fs-6">{{ Auth::user()->email }}</p>
+                                            @php
+                                            $authUser = Auth::id();
+                                            $user = App\Models\User::all();
+                                            $candidate = App\Models\Candidate::where('user_id', $authUser)->first();
+                                            @endphp
+                                            @can("is_candidate",$user)
+                                           
+
+                                           @if ($authUser == $candidate->user_id )
+                                           <a
+                                                href="{{route('candidate.show',$candidate->id)}}"
+                                                class="btn btn-xs btn-secondary btn-sm mt-2 fw-bold"
+                                            >View Profile</a>
+                                           @endif
+
+                                            @endcan
                                         </div>
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">My Profile</a>
-                                    <div class="dropdown-divider"></div>
+                                     <!-- <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">My Profile</a> -->
+                                    <div class="dropdown-divider"></div> 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

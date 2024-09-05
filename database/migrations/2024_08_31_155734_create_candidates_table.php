@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
-            $table->string("cv")->nullable();
-            $table->longText("about")->nullable();
+            $table->string("cv");
+            $table->longText("about");
             $table->foreignId("user_id")->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
