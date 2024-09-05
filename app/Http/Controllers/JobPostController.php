@@ -11,6 +11,7 @@ use App\Models\TechnologyJob;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
 use App\Models\User;
+use App\Models\Employee;
 
 class JobPostController extends Controller
 {
@@ -20,7 +21,8 @@ class JobPostController extends Controller
     public function index()
     {
         $JobPosts = JobPost::all();
-        return view('JobPosts.index', compact('JobPosts'));
+        $employees = Employee::all();
+        return view('JobPosts.index', compact('JobPosts','employees'));
     }
 
     /**
@@ -105,6 +107,7 @@ class JobPostController extends Controller
      */
     public function destroy(JobPost $jobPost)
     {
+        $jobPost->delete();
         return redirect()->route('JobPosts.index');
     }
 }
