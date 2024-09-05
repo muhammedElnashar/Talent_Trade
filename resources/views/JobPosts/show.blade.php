@@ -90,12 +90,12 @@
 @endsection
 
 @section("content")
-<div class="container p-5" style="margin-top: 100px !important; width: 70%;">
+<div class="container p-5" style=" width: 70%;">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>
-            <a href="/jobPosts" class="text-black"><i class="fa fa-arrow-left"></i></a>
-            <stronge class="ms-3"> {{$jobPost->title}} </stronge>
+            <a href="/jobPosts" class="text-black"><i class="fa fa-arrow-left fa-lg"></i></a>
+            <stronge class="ms-3 fw-bold fs-2"> {{$jobPost->title}} </stronge>
             </div>
 
         
