@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\JobPost;
 
 class EmployeeController extends Controller
 {
@@ -55,7 +56,8 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return view('employee.show', compact('employee'));
+        $jobs = JobPost::all();
+        return view('employee.show', compact('employee', 'jobs'));
     }
 
     /**
