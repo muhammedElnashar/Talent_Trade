@@ -23,7 +23,7 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href={{asset("assets/css/demo.css")}} />
-    @yield("css")
+    @stack("css")
 </head>
 <body>
 <div class="wrapper">

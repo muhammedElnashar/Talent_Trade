@@ -4,9 +4,9 @@
             <div class="logo-header" data-background-color="dark">
                 <a href="index.html" class="logo">
                     <img
-                        src={{asset("assets/img/kaiadmin/logo_light.svg")}}
+                        src="{{asset("assets/img/kaiadmin/logo_light.svg")}}"
                         alt="navbar brand"
-                        class="navbar-brand"
+                        class=" navbar-brand"
                         height="20"
                     />
                 </a>
@@ -28,7 +28,7 @@
         <nav
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
         >
-            <div class="container-fluid">
+            <div class="container-fluid mx-5 ">
                 <nav
                     class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
                 >
@@ -102,7 +102,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src={{asset("assets/img/jm_denis.jpg")}}
+                                                    src="{{asset("assets/img/jm_denis.jpg")}}"
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -115,7 +115,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src={{asset("assets/img/chadengle.jpg")}}
+                                                    src="{{asset("assets/img/chadengle.jpg")}}"
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -128,7 +128,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src={{asset("assets/img/mlane.jpg")}}
+                                                    src="{{asset("assets/img/mlane.jpg")}}"
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -143,7 +143,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src={{asset("assets/img/talha.jpg")}}
+                                                    src="{{asset("assets/img/talha.jpg")}}"
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -211,7 +211,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src={{asset("assets/img/profile2.jpg")}}
+                                                    src="{{asset("assets/img/profile2.jpg")}}"
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -357,7 +357,7 @@
                                     <div class="user-box">
                                         <div class="avatar-lg">
                                             <img
-                                                src={{asset("assets/img/profile.jpg")}}
+                                                src="{{asset("assets/img/profile.jpg")}}"
                                                 alt="image profile"
                                                 class="avatar-img rounded"
                                             />

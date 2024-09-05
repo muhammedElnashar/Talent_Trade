@@ -1,3 +1,5 @@
+
+
 <!--   Core JS Files   -->
 <script src={{asset("assets/js/core/jquery-3.7.1.min.js")}}></script>
 <script src={{asset("assets/js/core/popper.min.js")}}></script>
@@ -79,8 +81,7 @@
         },
     });
 </script>
-@yield("script")
+@stack("script")
 
 
-</body>
 </html>

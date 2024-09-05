@@ -6,6 +6,8 @@ use App\Http\Requests\StoreJobPostRequest;
 use App\Http\Requests\UpdateJobPostRequest;
 use App\Models\JobPost;
 use App\Models\Category;
+use App\Models\Technology;
+use App\Models\TechnologyJob;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
 use App\Models\User;
@@ -30,8 +32,9 @@ class JobPostController extends Controller
     {
         $jobPosts = JobPost::all();
         $categories = Category::all();
+        $technologies = Technology::all();
 
-        return view('JobPosts.create', compact('jobPosts','categories'));
+        return view('JobPosts.create', compact('jobPosts','categories','technologies'));
     }
 
     /**
@@ -39,12 +42,19 @@ class JobPostController extends Controller
      */
     public function store(StoreJobPostRequest $request)
     {
+
+
         $request_data=$request->all();
         $request_data['employee_id']=Auth::user()->id;
-        $request_data['category_id']=Auth::user()->id;
-
         $jobPost =JobPost::create($request_data);
-
+        $tech=$request_data['technology_id'];
+        foreach ($tech as $technology) {
+            TechnologyJob::create
+            ([
+                    'technology_id' => $technology,
+                    'job_post_id' => $jobPost->id
+            ]);
+        }
         return  redirect()->route('jobPosts.index', compact('jobPost'));
     }
 
@@ -66,8 +76,9 @@ class JobPostController extends Controller
     public function edit(JobPost $jobPost)
     {
         $categories = Category::all();
+        $technologies = Technology::all();
 
-        return view('JobPosts.update', compact('jobPost', 'categories'));
+        return view('JobPosts.update', compact('jobPost', 'categories','technologies'));
     }
 
     /**
@@ -77,8 +88,16 @@ class JobPostController extends Controller
     {
         $request_data=$request->all();
         $request_data['employee_id']=Auth::user()->id;
-        $request_data['category_id']=Auth::user()->id;
         $jobPost->update($request_data);
+        $tech=TechnologyJob::where('job_post_id', $jobPost->id)->get();
+        foreach ($tech as $technology) {
+
+            TechnologyJob::update
+            ([
+                'technology_id' => $technology,
+                'job_post_id' => $jobPost->id
+            ]);
+        }
         return redirect()->route('jobPosts.index', compact('jobPost'))->with('success', 'Job post updated successfully');
     }
 

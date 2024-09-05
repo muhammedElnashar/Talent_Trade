@@ -27,9 +27,9 @@ class StoreJobPostRequest extends FormRequest
         return [
             'title' => ['required', 'min:3'],
             'description' => ['required', 'string', 'min:3', 'max:255'],
-            'salary' => ['required', 'string', 'min:3', 'max:255'],
+            'salary' => ['required', 'integer', 'min:3'],
             'location' => ['required', 'string', 'min:3', 'max:255'],
-            'dead_line' => ['required', 'string', 'min:3', 'max:255'],
+            'dead_line' => ['required', 'date', 'min:3', 'max:255','after:date'],
         ];
     }
 }
