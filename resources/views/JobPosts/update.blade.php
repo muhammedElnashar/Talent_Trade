@@ -79,21 +79,21 @@
                             </select>
                         </div>
                         <div class="col-6 ">
-                            @php
-                                $techJop= App\Models\TechnologyJob::where('job_post_id' ,'=',$jobPost->id)->get();
+{{--                            @php--}}
+{{--                                $techJop= App\Models\TechnologyJob::where('job_post_id' ,'=',$jobPost->id)->get();--}}
 
-                            @endphp
-                            @foreach ($technologies as $index => $tech)
-                                @dd($tech)
-                                @if(isset($jobPost->technology[$index]->id))
-                                    @if($tech->id == $jobPost->technology[$index]->id )
-                                        <option  selected value="{{$tech->id}}">{{$tech->technology_name}}</option>
-                                    @endif
-                                @else
-                                    <option  value="{{$tech->id}}">{{$tech->technology_name}}</option>
-                                @endif
+{{--                            @endphp--}}
+{{--                            @foreach ($technologies as $index => $tech)--}}
+{{--                                @dd($tech)--}}
+{{--                                @if(isset($jobPost->technology[$index]->id))--}}
+{{--                                    @if($tech->id == $jobPost->technology[$index]->id )--}}
+{{--                                        <option  selected value="{{$tech->id}}">{{$tech->technology_name}}</option>--}}
+{{--                                    @endif--}}
+{{--                                @else--}}
+{{--                                    <option  value="{{$tech->id}}">{{$tech->technology_name}}</option>--}}
+{{--                                @endif--}}
 
-                            @endforeach
+{{--                            @endforeach--}}
                             <label class="form-label fs-3" for="autoSizingSelect">Technologies</label>
                             <select class="select2 form-select  " name="technology_id[]" multiple="multiple">
                             @foreach ($technologies as $index => $tech)
