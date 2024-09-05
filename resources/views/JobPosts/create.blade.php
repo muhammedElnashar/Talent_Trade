@@ -11,7 +11,7 @@
 <h1 class="text-center pt-5"  style="color: #6861ce">Create Your Job</h1>
     <form method="post" action="{{route('jobPosts.store')}}" enctype="multipart/form-data">
         @csrf
-        <div class="conatiner px-5">
+        <div class="conatiner px-5"></script>
             <div class="row">
             <div class="col-6">
             <div class="mb-3">
@@ -74,11 +74,14 @@
             </div>
             <div class="col-6">
                 <label class="form-label fs-3" for="autoSizingSelect">Technologies</label>
-                <select class="select2 form-select" name="technology_id[]" multiple="multiple">
+                <select class="select2 form-select" name="technology[]" multiple="multiple">
                     @foreach ($technologies as $tech)
                         <option class="p-3 m-3" value="{{$tech->id}}">{{$tech->technology_name}}</option>
                     @endforeach
                 </select>
+                @error('technology')
+                <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                @enderror
 
             </div>
                 </div>
@@ -108,5 +111,8 @@
 
             });
         });
+    </script>
+    <script>
+
     </script>
 @endpush

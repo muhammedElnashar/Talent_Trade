@@ -47,7 +47,7 @@ class JobPostController extends Controller
         $request_data=$request->all();
         $request_data['employee_id']=Auth::user()->id;
         $jobPost =JobPost::create($request_data);
-        $tech=$request_data['technology_id'];
+        $tech=$request_data['technology'];
         foreach ($tech as $technology) {
             TechnologyJob::create
             ([
