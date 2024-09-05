@@ -9,7 +9,7 @@
     />
     <link
         rel="icon"
-        href={{asset("assets/img/kaiadmin/favicon.ico")}}
+        href="{{asset("assets/img/kaiadmin/favicon.icon")}}"
         type="image/x-icon"
     />
 
@@ -23,7 +23,8 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href={{asset("assets/css/demo.css")}} />
-    @yield("css")
+    @stack("css")
 </head>
 <body>
-<div class="wrapper">
+{{--<div class="wrapper">--}}
+d

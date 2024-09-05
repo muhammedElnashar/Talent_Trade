@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TechnologyJob extends Model
 {
     use HasFactory;
+    protected $fillable=['technology_id','job_post_id'];
 }

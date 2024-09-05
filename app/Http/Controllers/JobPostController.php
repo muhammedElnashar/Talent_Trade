@@ -6,6 +6,8 @@ use App\Http\Requests\StoreJobPostRequest;
 use App\Http\Requests\UpdateJobPostRequest;
 use App\Models\JobPost;
 use App\Models\Category;
+use App\Models\Technology;
+use App\Models\TechnologyJob;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
 use App\Models\User;
@@ -28,21 +30,30 @@ class JobPostController extends Controller
     {
         $jobPosts = JobPost::all();
         $categories = Category::all();
+        $technologies = Technology::all();
 
-        return view('JobPosts.create', compact('jobPosts','categories'));
+        return view('JobPosts.create', compact('jobPosts','categories','technologies'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreJobPostRequest $request)
+    public function store(StoreJobPostRequest $request, JobPost $jobPost)
     {
+
+
         $request_data=$request->all();
         $request_data['employee_id']=Auth::user()->id;
-        $request_data['category_id']=Auth::user()->id;
+      $jobPost =JobPost::create($request_data);
+        $tech=$request_data['technology_id'];
+        foreach ($tech as $technology) {
+                TechnologyJob::create([
+                    'technology_id' => $technology,
+                    'job_post_id' => $jobPost->id
+                ]);
+        }
 
-        $jobPost =JobPost::create($request_data);
-
+//        $jobTech=TechnologyJob::create();
         return  redirect()->route('jobPosts.index', compact('jobPost'));
     }
 
@@ -77,7 +88,7 @@ class JobPostController extends Controller
         $request_data['employee_id']=Auth::user()->id;
         $request_data['category_id']=Auth::user()->id;
         $jobPost->update($request_data);
-        return redirect()->route('jobPosts.index', compact('jobPost')->with('success', 'Job post updated successfully');
+        return redirect()->route('jobPosts.index', compact('jobPost'))->with('success', 'Job post updated successfully');
     }
 
     /**
