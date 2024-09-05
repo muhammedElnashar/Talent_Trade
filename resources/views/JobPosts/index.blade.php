@@ -98,7 +98,7 @@
                         </a>
                         <p>{{ $jobPost->description }}</p>
                         <div class="card-footer d-flex">
-                            <a href="{{ route('jobPosts.show', $jobPost->id) }}" class="btn btn-primary ms-auto">More Details</a>
+                            <a href="{{ route('jobPosts.show', $jobPost->id) }}" class="btn  ms-auto" style="background-color:#5867dd; color:white;">More Details</a>
                         </div>
                     </div>
                 </div>
