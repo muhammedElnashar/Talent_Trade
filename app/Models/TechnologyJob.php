@@ -10,7 +10,13 @@ class TechnologyJob extends Model
 {
     use HasFactory;
     protected $fillable=['technology_id','job_post_id'];
-    public function job_post(){
-        return $this->belongsTo(JobPost::class,'job_post_id');
+   /* public function jobPost(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(JobPost::class,'job_post_id');
     }
+    public function technology(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Technology::class,'technology_id');
+    }*/
+
 }
