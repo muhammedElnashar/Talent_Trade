@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
-
+use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
     /**
@@ -29,7 +29,22 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        //
+        // Validate the incoming request data
+        $validated = $request->validated();
+        $comment = new Comment();
+        $comment->body = $validated['body'];
+        $comment->candidate_id = Auth::user()->id;
+        $comment->job_post_id = $validated['job_post_id'];
+        $comment->commentable_type = 'App\Models\JobPost';
+        $comment->commentable_id = $validated['job_post_id'];
+        $comment->save();
+
+
+        
+
+
+        // Redirect back to the job post page with a success message
+        return redirect()->back()->with('success', 'Comment added successfully!');
     }
 
     /**

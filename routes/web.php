@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Auth;
@@ -21,3 +22,9 @@ Route::resource('employee', EmployeeController::class);
 Route::resource('candidate', CandidateController::class);
 Route::get('/employeeDashboard', function () {return view('dashboard.employee');})->name("employeeDashboard");
 Route::get('/candidateDashboard', function () {return view('dashboard.candidate');})->name("candidateDashboard");
+Route::get('/archive', [App\Http\Controllers\UserController::class, 'archive'])->name('users.archive');
+Route::delete('/users/{usersid}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+Route::get('/restore/{usersid}', [App\Http\Controllers\UserController::class,'restore'])->name('users.restore');
+Route::get('/users',[App\Http\Controllers\UserController::class,'index'])->name('users.index');
+
+
