@@ -88,9 +88,8 @@ class JobPostController extends Controller
     {
         $request_data=$request->all();
         $request_data['employee_id']=Auth::user()->id;
-//        $jobPost->update($request_data);
+        $jobPost->update($request_data);
         $tech=TechnologyJob::where('job_post_id', $jobPost->id)->get();
-        dd($tech);
         foreach ($tech as $technology) {
 
             TechnologyJob::update

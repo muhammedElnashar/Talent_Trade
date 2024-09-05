@@ -1,4 +1,3 @@
-
 @extends("dashboard")
 @section("title")
     Update Job
@@ -9,9 +8,9 @@
 @endpush
 @section("content")
     <h1 class="text-center pt-5"  style="color: #6861ce">Update Your Job</h1>
-    <form method="post" action="{{route('jobPosts.store')}}" enctype="multipart/form-data">
+    <form method="post" action="{{route('jobPosts.update',$jobPost)}}" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
+        @method('put')
         <div class="conatiner px-5">
             <div class="row">
                 <div class="col-6">
@@ -36,7 +35,7 @@
                         <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="row d-flex">
+                    <div class="row  d-flex">
 
                         <div class="col-6">
                             <label for="exampleFormControlInput1" class="form-label fs-3">Job Location</label>
@@ -47,7 +46,7 @@
                             @enderror
 
                         </div>
-                        <div class="col-4">
+                        <div class="col-6">
                             <label class="form-label fs-3" for="autoSizingSelect">Location Type</label>
                             <select class="form-select p-2" name="work_type" id="autoSizingSelect">
                                 <option value="1">On-site</option>
@@ -104,7 +103,7 @@
 
         $(document).ready(function() {
             $('.select2').select2({
-                placeholder: "Select one or more options",
+                placeholder: "Select one or more technology",
                 allowClear: true
 
             });
