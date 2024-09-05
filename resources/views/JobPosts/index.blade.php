@@ -105,6 +105,11 @@
             </div>
         </div>
     @endforeach
+    <div class='d-flex justify-content-center my-3'>
+    {{ $JobPosts->links() }}
+
+    </div>
+
 @endsection
 @section("script")
 

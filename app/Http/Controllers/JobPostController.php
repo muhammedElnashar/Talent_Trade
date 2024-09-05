@@ -20,7 +20,7 @@ class JobPostController extends Controller
      */
     public function index()
     {
-        $JobPosts = JobPost::all();
+        $JobPosts = JobPost::paginate(4);
         $employees = Employee::all();
         return view('JobPosts.index', compact('JobPosts','employees'));
     }
