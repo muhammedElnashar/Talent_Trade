@@ -84,7 +84,7 @@
 @foreach ($JobPosts as $jobPost)
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="card my-3" style="margin-top: 100px !important;">
+                <div class="card my-3" style="margin-top: 50px !important;">
                     <div class="card-body">
                         <div class="d-flex mb-3">
                             <img src="{{ asset('images/users/logo/'.$employees->find($jobPost->employee_id)->logo) }}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
@@ -98,7 +98,7 @@
                         </a>
                         <p>{{ $jobPost->description }}</p>
                         <div class="card-footer d-flex">
-                            <a href="{{ route('jobPosts.show', $jobPost->id) }}" class="btn btn-primary ms-auto">More Details</a>
+                            <a href="{{ route('jobPosts.show', $jobPost->id) }}" class="btn rounded  ms-auto" style="background-color:#5867dd; color:white;border-radius:30px !important">More Details</a>
                         </div>
                     </div>
                 </div>
@@ -109,13 +109,3 @@
 @section("script")
 
 @endsection
-
-
- <!-- <div class="d-flex">
-            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
-            <input type="text" class="form-control" placeholder="Write a comment...">
-            <button class="btn btn-primary ms-2">Comment</button>-->
-
-
-
-
