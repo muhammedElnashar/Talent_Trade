@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Requests\UpdateTechnologyRequest;
 use App\Models\Technology;
-
+use Illuminate\Http\Request;
 class TechnologyController extends Controller
 {
     /**
@@ -13,7 +13,8 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologys = Technology::all();
+        return view("skills.index",compact('technologys') );
     }
 
     /**
@@ -21,7 +22,7 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        return view('skills.create');
     }
 
     /**
@@ -29,38 +30,47 @@ class TechnologyController extends Controller
      */
     public function store(StoreTechnologyRequest $request)
     {
-        //
+        Technology::create($request->all());
+        return redirect()->route('skills.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Technology $technology)
+    public function show( $id , Request $request)
     {
-        //
+        // dd($request->all());
+        $technology = Technology::findOrFail($id);  // returns the technology model object
+        return view("skills.show" , compact('technology'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Technology $technology)
+    public function edit(Technology $technology ,$id)
     {
-        //
+        $technology = Technology::findOrFail($id);
+        return view('skills.edit', compact('technology'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTechnologyRequest $request, Technology $technology)
+    public function update(UpdateTechnologyRequest $request, $id)
     {
-        //
+        $technology = Technology::findOrFail($id);
+        $technology->update($request->all());
+        return redirect()->route('skills.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Technology $technology)
+    public function destroy(Technology $technology ,$id)
     {
-        //
+        // dd($technology); 
+        $technology = Technology::findOrFail($id);
+        $technology->delete();
+        return redirect()->route('skills.index');
     }
 }

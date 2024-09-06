@@ -25,6 +25,10 @@ class StoreCandidateRequest extends FormRequest
             'cv' => ['required', 'file', 'mimes:pdf,docx,doc'],
             'about' => ['required'],
             'user_id' => ['required', 'exists:users,id'],
+            'title' => ['required'],
+            'location' => ['required'],
+            'education' => ['required'],
+            'phone' => ['required', 'numeric'],
         ];
     }
 }
