@@ -4,8 +4,9 @@
 <!-- End Sidebar -->
     <div class="main-panel">
     @include("layouts.header")
+    <div class="container">
 @yield("content")
-    <!-- Custom template | don't include it in your project! -->
+    </div> <!-- Custom template | don't include it in your project! -->
     @include("layouts.setting")
     <!-- End Custom template -->
 </div>
