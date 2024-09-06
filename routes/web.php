@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +29,8 @@ Route::prefix('candidate')->middleware(['auth',"is_candidate"])->group(function 
 
 
 Route::resource('candidate', CandidateController::class);
+Route::resource('users', UserController::class);
+Route::resource('category', CategoryController::class);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard-role', function () {return view('auth/dashboard-role');})->name('dashboard_role');
 Route::resource('employee', EmployeeController::class);

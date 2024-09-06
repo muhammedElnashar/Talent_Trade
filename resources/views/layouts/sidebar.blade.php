@@ -3,12 +3,8 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-                <img
-                    src={{asset("assets/img/kaiadmin/logo_light.svg")}}
-                    alt="navbar brand"
-                class="navbar-brand"
-                height="20"
-                />
+                <img src={{asset("assets/img/kaiadmin/logo_light.svg")}} alt="navbar brand" class="navbar-brand"
+                    height="20" />
             </a>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -28,54 +24,54 @@
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
                 <li class="nav-section">
-                <span class="sidebar-mini-icon">
-                  <i class="fa fa-ellipsis-h"></i>
-                </span>
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
                     <h4 class="text-section">Components</h4>
                 </li>
                 @if (\Illuminate\Support\Facades\Auth::user()->role === "admin")
-                    <li class="nav-item">
-                        <a data-bs-toggle="collapse" href="#base">
-                            <i class="fas fa-layer-group"></i>
-                            <p>Category</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="base">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="">
-                                        <span class="sub-item">Categories</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <span class="sub-item">Add Category</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarLayouts">
-                            <i class="fas fa-th-list"></i>
-                            <p>Technology</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="sidebarLayouts">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="">
-                                        <span class="sub-item">Technologies</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <span class="sub-item">Add Technology</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#base">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Category</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="base">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Categories</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Add Category</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                        <i class="fas fa-th-list"></i>
+                        <p>Technology</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="sidebarLayouts">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Technologies</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span class="sub-item">Add Technology</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 @endif
 
