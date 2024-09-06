@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\JobPost;
 
 class EmployeeController extends Controller
 {
@@ -15,7 +16,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+
+        $employees = Employee::all();
+        return view('employee.index', compact('employees'));
     }
 
     /**
@@ -23,7 +26,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employee.create');
+        $user_id=Auth::user()->id;
+        return view('employee.create', compact('user_id'));
     }
 
     /**
@@ -31,18 +35,20 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-        if ($request->hasFile("logo")){
+        if ($request->hasFile("logo")) {
             $logo = $request->file("logo");
-            $logoPath = $logo->store("logo","user_image");
+            $logoPath = $logo->store("logo", "user_image");
         }
-        $data = $request->all();
-        $data['logo'] = $logoPath;
-        Employee::create($data);
-        $user = User::findorfail(Auth::id());
-        $user['role']="employee";
-        $user->save();
-        return redirect()->route('employeeDashboard');
 
+        $data = $request->all();
+        $data['logo'] = $logoPath ?? null;
+        Employee::create($data);
+
+        $user = User::findOrFail(Auth::id());
+        $user['role'] = "employee";
+        $user->save();
+
+        return redirect()->route('employeeDashboard');
     }
 
     /**
@@ -50,7 +56,8 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        $jobs = JobPost::all();
+        return view('employee.show', compact('employee', 'jobs'));
     }
 
     /**
@@ -58,7 +65,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        return view('employee.edit', compact('employee'));
     }
 
     /**
@@ -66,7 +73,14 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
-        //
+        if ($request->hasFile("logo")) {
+            $logo = $request->file("logo");
+            $logoPath = $logo->store("logo", "user_image");
+            $employee->logo = $logoPath;
+        }
+
+        $employee->update($request->all());
+        return redirect()->route('employee.show', $employee->id);
     }
 
     /**
@@ -74,6 +88,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+        return redirect()->route('employee.index');
     }
 }
