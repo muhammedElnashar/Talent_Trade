@@ -19,7 +19,7 @@
                         <input type="text" class="form-control" id="jobTitle" name="title" placeholder="Job Title"
                                value="{{$jobPost->title}}">
                         @error('title')
-                        <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                        <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
@@ -27,7 +27,7 @@
                         <textarea class="form-control" name="description" id="exampleFormControlTextarea1"
                                   rows="3">{{$jobPost->description}}</textarea>
                         @error('description')
-                        <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                        <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
@@ -35,7 +35,7 @@
                         <input type="text" name="salary" class="form-control" id="expectedSalary"
                                placeholder="Expected Salary" value="{{$jobPost->salary}}">
                         @error('salary')
-                        <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                        <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="row  d-flex">
@@ -46,7 +46,7 @@
                             <input type="text" class="form-control" name="location" placeholder="City" aria-label="City"
                                    value="{{$jobPost->location}}">
                             @error('location')
-                            <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                            <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                             @enderror
 
                         </div>
@@ -65,7 +65,7 @@
                         <input type="date" name="dead_line" class="form-control" id="Deadline" placeholder="Deadline"
                                value="{{$jobPost->dead_line}}">
                         @error('dead_line')
-                        <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                        <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="row mb-5">
@@ -107,6 +107,9 @@
 
                                 @endforeach
                             </select>
+                            @error('technology')
+                            <div class="alert alert-danger w-100 text-center my-3 ">{{ $message }}</div>
+                            @enderror
 
                         </div>
                     </div>
