@@ -1,8 +1,7 @@
-
-@extends("dashboard")
+@extends("welcome")
 
 @section("title")
-    Test
+    Pending Posts
 @endsection
 @push("css")
     <style>
@@ -79,22 +78,20 @@
 
 @endpush
 @section("content")
-    @foreach ($JobPosts as $jobPost)
-
+    @foreach ($pendingPosts as $jobPost)
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="card my-3" style="margin-top: 50px !important;">
                     <div class="card-body">
                         <div class="d-flex mb-3">
                             @php
-
                                 $employee = App\Models\Employee::where('id','=', $jobPost->employee_id)->first();
                                 $user = App\Models\User::where('id','=', $employee->user_id)->first();
                             @endphp
                             <img src="{{ asset('images/users/'.$user->image)}}"
                                  style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
                             <div>
-                                <a class="text-decoration-none text-dark"  href="{{ route('employee.show', $employee->id) }}">
+                                <a href="{{ route('employee.show', $employee) }}">
                                     <h3 class="m-0">{{ $user->name}}</h3>
                                 </a>
                                 <small class="text-muted fs-6">{{ $jobPost->created_at->format('F j, Y, g:i a') }}</small>
@@ -103,24 +100,42 @@
 
                         <h5 class="fs-4 text-black">{{ $jobPost->title }}</h5>
                         <p>{{ $jobPost->description }}</p>
-
                         <div class="d-flex mb-1">
                             @foreach($jobPost->technology as $jobTechnology)
                                 <span class="fs-6 px-5 fw-bold mx-2 my-2 rounded-5 p-1 text-white" style="background-color: #0a5a97">{{$jobTechnology->technology_name}}</span>
                             @endforeach
                         </div>
-                        <div class="card-footer d-flex">
-                            <a href="{{ route('jobPosts.show', $jobPost->id) }}" class="btn fs-6 px-5 fw-bold mx-2  rounded-5 rounded  ms-auto"
-                               style="background-color:#5867dd; color:white;border-radius:20px !important">More
-                                Details</a>
+                        <div class="card-footer">
+                            <div class="ms-auto d-flex">
+
+                               <div class="ms-auto">
+                                   <form  method="POST" action="{{route('approved_status',$jobPost)}}">
+                                       @csrf
+                                       @method('PUT')
+                                       <input type="submit" value="Approved" class="btn rounded me-3  px-5 fw-bold "
+                                              style="background-color:#5867dd; color:white;border-radius:30px !important">
+                                   </form>
+                               </div>
+
+                                <div>
+                                    <form  method="POST" action="{{route('reject_status',$jobPost)}}">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="submit" value="Reject" class="btn rounded btn-danger px-5 fw-bold "
+                                               style=" color:white;border-radius:30px !important">
+                                    </form>
+                                </div>
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
-    <div class='d-flex justify-content-center my-3'>
-        {{ $JobPosts->links() }}
+  <div class='d-flex justify-content-center my-3'>
+        {{ $pendingPosts->links() }}
 
     </div>
 

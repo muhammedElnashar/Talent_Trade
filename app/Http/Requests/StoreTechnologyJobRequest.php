@@ -22,7 +22,8 @@ class StoreTechnologyJobRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'technology_id' => 'required',
+            'job_post_id' => 'required'
         ];
     }
 }

@@ -12,9 +12,14 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_admin');
+    }
     public function index()
     {
-        $users=User::all();
+        $users = User::all();
         return view('Users.index', compact('users'));
 
 
@@ -61,25 +66,27 @@ class UserController extends Controller
     {
         //
     }
-    public function archive()
-    {
-        $users = user::onlyTrashed()->get();
 
-        return view('Users.archive', ['users' => $users]);
-    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($userid)
-{
-$user = User::withTrashed()->findOrFail($userid);
-
-if ($user->trashed()) {
-$user->forceDelete();
-} else {
-$user->delete();
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('users.archive')->with('success', 'user deleted successfully.');
+    }
+    public function archive()
+    {
+        $users = user::onlyTrashed()->get();
+        return view('Users.archive', ['users' => $users]);
+    }
+    public function restore($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->restore();
+        return to_route('users.index');
+    }
 }
 
-return redirect()->route('users.archive')->with('success', 'user deleted successfully.');
-}
-}
+
+

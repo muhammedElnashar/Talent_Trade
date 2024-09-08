@@ -8,6 +8,12 @@ use App\Models\Technology;
 use Illuminate\Http\Request;
 class TechnologyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_admin');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -68,7 +74,7 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology ,$id)
     {
-        // dd($technology); 
+        // dd($technology);
         $technology = Technology::findOrFail($id);
         $technology->delete();
         return redirect()->route('skills.index');

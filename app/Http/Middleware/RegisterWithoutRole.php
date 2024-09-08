@@ -4,10 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsCandidateMiddleware
+class RegisterWithoutRole
 {
     /**
      * Handle an incoming request.
@@ -16,8 +15,8 @@ class IsCandidateMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role !== "candidate" ) {
-            abort(401);
+        if (auth()->user()->role !== null) {
+            abort(401, 'Unauthorized action.');
         }
         return $next($request);
     }

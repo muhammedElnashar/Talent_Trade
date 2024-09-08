@@ -16,7 +16,7 @@ class IsEmployeeMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role !== "employee") {
+        if (Auth::user()->role !== "employee" ) {
             abort(401);
         }
         return $next($request);

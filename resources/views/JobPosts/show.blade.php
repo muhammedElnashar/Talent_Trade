@@ -4,7 +4,7 @@
     Job Post Details
 @endsection
 
-@section("css")
+@push("css")
 <style>
     .container {
         max-width: 900px;
@@ -87,7 +87,7 @@
         background-color: #0056b3;
     }
 </style>
-@endsection
+@endpush
 
 @section("content")
 <div class="container p-5" style=" width: 70%;">
@@ -98,9 +98,9 @@
             <stronge class="ms-3 fw-bold fs-2"> {{$jobPost->title}} </stronge>
             </div>
 
-        
+
             <p style="font-weight:lighter"> Posted on {{$jobPost->created_at}} </p>
-            
+
         </div>
         <div class="card-body">
             <div class="job-details my-3">
@@ -143,13 +143,17 @@
     <div class="comments-section">
             <h5>Job Offers</h5>
             @foreach($comments as $comment)
+                @php
+                $candidate = \App\Models\Candidate::findOrFail($comment->candidate_id);
+                $user= \App\Models\User::where('id','=',$candidate->user_id)->first();
+                 @endphp
                 <div class="card">
                     <div class='card-header d-flex justify-content-between align-items-center'>
                     <div class="d-flex align-items-center">
-                        <img src="{{ asset('images/users/images/avatar.png') }}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
-                        <p class="card-text"><strong>{{ $users->find($comment->candidate_id)->name }}</strong></p>
+                        <img src="{{ asset('images/users/' . $user->image) }}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
+                        <p class="card-text"><strong>{{ $user->name }}</strong></p>
                     </div>
-                        
+
                         <p class="text-muted " style="font-weight:lighter">Posted on {{ $comment->created_at->format('F j, Y, g:i a') }}</p>
                     </div>
                     <div class="card-body">

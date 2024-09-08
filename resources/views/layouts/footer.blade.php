@@ -15,8 +15,7 @@
 <script src={{asset("assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js")}}></script>
 {{--<script src={{asset("assets/js/setting-demo.js")}}></script>--}}
 {{--<script src={{asset("assets/js/demo.js")}}></script>--}}
-<script src="assets/js/setting-demo.js"></script>
-<script src="assets/js/demo.js"></script>
+
 <!-- Chart Circle -->
 <script src={{asset("assets/js/plugin/chart-circle/circles.min.js")}}></script>
 
@@ -87,4 +86,4 @@
 @stack("script")
 
 
-</html>
+

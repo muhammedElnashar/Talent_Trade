@@ -11,6 +11,8 @@ class Comment extends Model
     use HasFactory;
     protected $fillable = [
         'body',
+        'commentable_id',
+        'commentable_type',
         'candidate_id',
         'job_post_id',
     ];

@@ -78,37 +78,25 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="col-6 ">
-{{--                            @php--}}
-{{--                                $techJop= App\Models\TechnologyJob::where('job_post_id' ,'=',$jobPost->id)->get();--}}
+                            @php
+                                $techJop= App\Models\TechnologyJob::where('job_post_id' ,'=',$jobPost->id)->get();
+                                $jopTech = $jobPost->technology->pluck('id')->toArray();
+                            @endphp
 
-{{--                            @endphp--}}
-{{--                            @foreach ($technologies as $index => $tech)--}}
-{{--                                @dd($tech)--}}
-{{--                                @if(isset($jobPost->technology[$index]->id))--}}
-{{--                                    @if($tech->id == $jobPost->technology[$index]->id )--}}
-{{--                                        <option  selected value="{{$tech->id}}">{{$tech->technology_name}}</option>--}}
-{{--                                    @endif--}}
-{{--                                @else--}}
-{{--                                    <option  value="{{$tech->id}}">{{$tech->technology_name}}</option>--}}
-{{--                                @endif--}}
-
-{{--                            @endforeach--}}
                             <label class="form-label fs-3" for="autoSizingSelect">Technologies</label>
                             <select class="select2 form-select  " name="technology_id[]" multiple="multiple">
-                            @foreach ($technologies as $index => $tech)
-                                @if(isset($jobPost->technology[$index]->id))
-                                    @if($tech->id == $jobPost->technology[$index]->id )
-                                        <option  selected value="{{$tech->id}}">{{$tech->technology_name}}</option>
-                                    @endif
-                                    @else
-                                        <option  value="{{$tech->id}}">{{$tech->technology_name}}</option>
-                                    @endif
-
+                                @foreach ($technologies as $tech)
+                                    <option
+                                        value="{{$tech->id}}"
+                                    @if(in_array($tech->id, $jopTech))  selected @endif >
+                                        {{$tech->technology_name}}
+                                    </option>
                                 @endforeach
                             </select>
-                            @error('technology')
-                            <div class="alert alert-danger w-100 text-center my-3 ">{{ $message }}</div>
+                            @error('technology_id')
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
 
                         </div>

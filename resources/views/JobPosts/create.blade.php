@@ -74,7 +74,7 @@
             </div>
             <div class="col-6">
                 <label class="form-label fs-3" for="autoSizingSelect">Technologies</label>
-                <select class="select2 form-select" name="technology[]" multiple="multiple">
+                <select class="select2 form-select" name="technology_id[]" multiple="multiple">
                     @foreach ($technologies as $tech)
                         <option class="p-3 m-3"  value="{{$tech->id}}">{{$tech->technology_name}}</option>
                     @endforeach

@@ -24,6 +24,7 @@ class StoreCommentRequest extends FormRequest
         return [
             'body' => 'required|string|max:500',
             'job_post_id' => 'required|exists:job_posts,id',
+
         ];
     }
 }

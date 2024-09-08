@@ -22,7 +22,7 @@ class UpdateCandidateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cv' => ['required', 'file', 'mimes:pdf,docx,doc'],
+            'cv' => [ 'file', 'mimes:pdf,docx,doc'],
             'about' => ['required'],
             'user_id' => ['required', 'exists:users,id'],
             'title' => ['required'],

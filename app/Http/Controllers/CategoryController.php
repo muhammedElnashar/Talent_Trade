@@ -8,6 +8,10 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('is_admin');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -42,7 +46,7 @@ class CategoryController extends Controller
      * Display the specified resource.
      */
     // public function show(Category $category)
-    // {  
+    // {
     //     return view('category.show', compact('category'));
 
     //     //
@@ -65,7 +69,7 @@ class CategoryController extends Controller
     {
         $data = $request->all();
         $category->update($data);
-        
+
         return to_route('category.index')->with('success', 'Category updated successfully.');
         //
     }

@@ -1,10 +1,9 @@
-    <div class="main-header">
+    <div class="main-header  " style="margin-bottom: 50px" >
         <div class="main-header-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
                 <a href="index.html" class="logo">
-                    <img src={{asset("assets/img/kaiadmin/logo_light.svg")}} alt="navbar brand" class="navbar-brand"
-                        height="20" />
+                    <img src={{asset("assets/img/kaiadmin/logo_light.svg")}} alt="navbar-brand" class="navbar-brand" height="20" />
                 </a>
                 <div class="nav-toggle">
                     <button class="btn btn-toggle toggle-sidebar">
@@ -21,10 +20,10 @@
             <!-- End Logo Header -->
         </div>
         <!-- Navbar Header -->
-        <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+        <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" style="height: 10px;"  >
             <div class="container-fluid">
                 <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-                    <div class="input-group">
+                    <div class="input-group" style="margin-left: 50px">
                         <div class="input-group-prepend">
                             <button type="submit" class="btn btn-search pe-1">
                                 <i class="fa fa-search search-icon"></i>
@@ -85,7 +84,7 @@
                                         </a>
                                         <a href="#">
                                             <div class="notif-img">
-                                                <img src={{asset("assets/img/profile2.jpg")}} alt="Img Profile" />
+                                                <img src={{asset("assets/img/profile2.jpg")}} alt="Img-Profile" />
                                             </div>
                                             <div class="notif-content">
                                                 <span class="block">
@@ -143,7 +142,7 @@
                                 <li>
                                     <div class="user-box">
                                         <div class="avatar-lg">
-                                            <img src={{asset("images/users/".Auth::user()->image)}} alt="image profile"
+                                            <img src={{asset("images/users/".Auth::user()->image)}} alt="image-profile"
                                                 class="avatar-img rounded" />
                                         </div>
                                         <div class="u-text">
@@ -153,12 +152,22 @@
                                             $authUser = Auth::id();
                                             $user = App\Models\User::all();
                                             $candidate = App\Models\Candidate::where('user_id', $authUser)->first();
+                                            $employee = App\Models\Employee::where('user_id', $authUser)->first();
                                             @endphp
                                             @can("is_candidate",$user)
 
 
                                             @if ($authUser == $candidate->user_id )
                                             <a href="{{route('candidate.show',$candidate->id)}}"
+                                                class="btn btn-xs btn-secondary btn-sm mt-2 fw-bold">View Profile</a>
+                                            @endif
+
+                                            @endcan
+                                            @can("is_employee",$user)
+
+
+                                            @if ($authUser == $employee->user_id )
+                                            <a href="{{route('employee.show',$employee->id)}}"
                                                 class="btn btn-xs btn-secondary btn-sm mt-2 fw-bold">View Profile</a>
                                             @endif
 

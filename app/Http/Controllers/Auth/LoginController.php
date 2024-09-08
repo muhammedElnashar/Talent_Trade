@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected function redirectTo()
+  /*  protected function redirectTo()
     {
         switch (Auth::user()->role) {
         case 'admin':
@@ -36,8 +36,8 @@ class LoginController extends Controller
         case 'candidate':
             return route('candidateDashboard');
     }
-    }
-    /*protected $redirectTo = '/dashboard-role';*/
+    }*/
+    protected $redirectTo = '/Dashboard';
 
     /**
      * Create a new controller instance.

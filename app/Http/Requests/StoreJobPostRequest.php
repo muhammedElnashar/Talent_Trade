@@ -30,7 +30,7 @@ class StoreJobPostRequest extends FormRequest
             'salary' => ['required', 'integer', 'min:3'],
             'location' => ['required', 'string', 'min:3', 'max:255'],
             'dead_line' => ['required', 'date', 'min:3', 'max:255','after:date'],
-            'technology' => ['required','array','min:1'],
+            'technology_id' => ['required','array','min:1'],
         ];
     }
 }

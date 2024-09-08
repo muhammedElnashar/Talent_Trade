@@ -11,9 +11,20 @@ use App\Models\CandidateTechnology;
 use App\Models\User;
 
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 class CandidateController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_candidate')->except('create','store');
+        $this->middleware('Create_Without_Role')->only('create','store');
+        $this->middleware('is_admin')->only('index','destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -37,7 +48,7 @@ class CandidateController extends Controller
      */
     public function store(StoreCandidateRequest $request)
     {
-        
+
         if ($request->hasFile("cv")){
             $cv = $request->file("cv");
             $cvName = $cv->store("Cv","user_image");
@@ -58,8 +69,11 @@ class CandidateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Candidate $candidate ,Technology $technology )
+    public function show(Request $request,Candidate $candidate ,Technology $technology )
     {
+        if ($request->user()->cannot('update',$candidate)){
+            abort(401);
+        };
         $technology = Technology::all();
         return view('candidate.show' ,compact('candidate' ,'technology'));
     }
@@ -67,8 +81,11 @@ class CandidateController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Candidate $candidate)
+    public function edit(Request $request , Candidate $candidate)
     {
+        if ($request->user()->cannot('update',$candidate)){
+            abort(401);
+        }
         return view('candidate.edit' , compact('candidate'));
     }
 
@@ -82,7 +99,9 @@ class CandidateController extends Controller
             $cvName = $cv->store("Cv","user_image");
         }
         $data = $request->all();
-        $data['cv'] = $cvName;
+        if (isset($cvName)){
+            $data['cv'] = $cvName;
+        }
         $candidate->update($data);
         return redirect()->route('candidate.show', $candidate);
         // return redirect()->route('candidateDashboard');
