@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 @endpush
 @section("content")
-    <h1 class="text-center pt-5"  style="color: #6861ce">Update Your Job</h1>
+    <h1 class="text-center pt-5" style="color: #6861ce">Update Your Job</h1>
     <form method="post" action="{{route('jobPosts.update',$jobPost)}}" enctype="multipart/form-data">
         @csrf
         @method('put')
@@ -16,23 +16,26 @@
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="jobTitle" class="form-label fs-3" style="color:#5867dd">Job Title</label>
-                        <input type="text" class="form-control" id="jobTitle" name="title" placeholder="Job Title" value="{{$jobPost->title}}">
+                        <input type="text" class="form-control" id="jobTitle" name="title" placeholder="Job Title"
+                               value="{{$jobPost->title}}">
                         @error('title')
-                        <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                        <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label fs-3">Job Description</label>
-                        <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3">{{$jobPost->description}}</textarea>
+                        <textarea class="form-control" name="description" id="exampleFormControlTextarea1"
+                                  rows="3">{{$jobPost->description}}</textarea>
                         @error('description')
-                        <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                        <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="expectedSalary" class="form-label fs-3">Salary Expected</label>
-                        <input type="text" name="salary" class="form-control" id="expectedSalary" placeholder="Expected Salary" value="{{$jobPost->salary}}">
+                        <input type="text" name="salary" class="form-control" id="expectedSalary"
+                               placeholder="Expected Salary" value="{{$jobPost->salary}}">
                         @error('salary')
-                        <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                        <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="row  d-flex">
@@ -40,9 +43,10 @@
                         <div class="col-6">
                             <label for="exampleFormControlInput1" class="form-label fs-3">Job Location</label>
 
-                            <input type="text" class="form-control" name="location" placeholder="City" aria-label="City" value="{{$jobPost->location}}">
+                            <input type="text" class="form-control" name="location" placeholder="City" aria-label="City"
+                                   value="{{$jobPost->location}}">
                             @error('location')
-                            <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                            <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                             @enderror
 
                         </div>
@@ -58,38 +62,67 @@
                     </div>
                     <div class="my-3">
                         <label for="expectedSalary" class="form-label fs-3">Deadline</label>
-                        <input type="date" name="dead_line" class="form-control" id="Deadline" placeholder="Deadline" value="{{$jobPost->dead_line}}">
+                        <input type="date" name="dead_line" class="form-control" id="Deadline" placeholder="Deadline"
+                               value="{{$jobPost->dead_line}}">
                         @error('dead_line')
-                        <div class="alert alert-danger w-50 my-3">{{ $message }}</div>
+                        <div class="alert alert-danger w-100 text-center my-3">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="row mb-5">
                         <div class="col-6">
                             <label class="form-label fs-3" for="autoSizingSelect">Category</label>
-                            <select class="form-select p-2" name="category_id" id="autoSizingSelect" @selected('category_id')>
+                            <select class="form-select p-2" name="category_id"
+                                    id="autoSizingSelect" @selected('category_id')>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{$category->category_name}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-6 ">
+{{--                            @php--}}
+{{--                                $techJop= App\Models\TechnologyJob::where('job_post_id' ,'=',$jobPost->id)->get();--}}
+
+{{--                            @endphp--}}
+{{--                            @foreach ($technologies as $index => $tech)--}}
+{{--                                @dd($tech)--}}
+{{--                                @if(isset($jobPost->technology[$index]->id))--}}
+{{--                                    @if($tech->id == $jobPost->technology[$index]->id )--}}
+{{--                                        <option  selected value="{{$tech->id}}">{{$tech->technology_name}}</option>--}}
+{{--                                    @endif--}}
+{{--                                @else--}}
+{{--                                    <option  value="{{$tech->id}}">{{$tech->technology_name}}</option>--}}
+{{--                                @endif--}}
+
+{{--                            @endforeach--}}
                             <label class="form-label fs-3" for="autoSizingSelect">Technologies</label>
                             <select class="select2 form-select  " name="technology_id[]" multiple="multiple">
-                                @foreach ($technologies as $tech)
-                                    <option value="{{$tech->id}}">{{$tech->technology_name}}</option>
+                            @foreach ($technologies as $index => $tech)
+                                @if(isset($jobPost->technology[$index]->id))
+                                    @if($tech->id == $jobPost->technology[$index]->id )
+                                        <option  selected value="{{$tech->id}}">{{$tech->technology_name}}</option>
+                                    @endif
+                                    @else
+                                        <option  value="{{$tech->id}}">{{$tech->technology_name}}</option>
+                                    @endif
+
                                 @endforeach
                             </select>
+                            @error('technology')
+                            <div class="alert alert-danger w-100 text-center my-3 ">{{ $message }}</div>
+                            @enderror
 
                         </div>
                     </div>
 
                 </div>
                 <div class="col-6 mt-5 ">
-                    <img class="img-fluid"  src="{{asset("/assets/img/undraw/update.svg")}}">
+                    <img class="img-fluid" src="{{asset("/assets/img/undraw/update.svg")}}">
                 </div>
             </div>
             <div class="my-5 px-3 text-center">
-                <button class="btn w-25 fs-3" style="background-color: #5867dd; color: lavenderblush" type="submit">Update Job</button>
+                <button class="btn w-25 fs-3" style="background-color: #5867dd; color: lavenderblush" type="submit">
+                    Update Job
+                </button>
             </div>
         </div>
 

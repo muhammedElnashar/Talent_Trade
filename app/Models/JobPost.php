@@ -23,4 +23,9 @@ class JobPost extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
+    public function technology(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Technology::class,'technology_jobs');
+    }
+
 }
