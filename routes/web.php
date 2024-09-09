@@ -45,7 +45,12 @@ Route::get('/auth/callback', function () {
 
     ]);
     Auth::login($githubUser);
-
-    return redirect('/dashboard-role');
+    if (Auth::User()->role =='employee'){
+        return redirect('/employeeDashboard');
+    }elseif (Auth::User()->role =='candidate'){
+        return redirect('/candidateDashboard');
+    }else{
+        return redirect('/dashboard-role');
+    }
 
 });
