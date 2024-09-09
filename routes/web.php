@@ -10,15 +10,18 @@ use App\Http\Controllers\JobPostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 use App\Http\Controllers\TechnologyController;
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', function () {
-if (!Auth::check()){
-    return to_route('login');
+    if (!Auth::check()) {
+        return to_route('login');
     }
     return view('dashboard')
-    ;})->name("dashboard");
+    ;
+})->name("dashboard");
 Route::get('/test', function () {return view('test');});
 Auth::routes();
 Route::prefix('Dashboard')->middleware('auth')->group(function () {
@@ -27,7 +30,7 @@ Route::prefix('Dashboard')->middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
     Route::get('/users-archive', [UserController::class, 'archive'])->name('users.archive');
     Route::get('/users-restore/{id}', [UserController::class, 'restore'])->name('users.restore');
-    Route::resource('skills',TechnologyController::class);
+    Route::resource('skills', TechnologyController::class);
     Route::resource('employee', EmployeeController::class);
     Route::resource('candidate', CandidateController::class);
     Route::resource('candidate-technology', CandidateTechnologyController::class);
@@ -45,3 +48,35 @@ Route::get('/dashboard-role', function () {return view('auth/dashboard-role');})
 
 
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('jobPosts', JobPostController::class);
+Route::resource('comments', CommentController::class);
+
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('github')->redirect();
+})->name('auth.github');
+
+Route::get('/auth/callback', function () {
+
+    $githubUser = Socialite::driver('github')->user();
+    $githubUser = User::updateOrCreate([
+        'github_id' => $githubUser->id,
+    ], [
+        'name' => $githubUser->name,
+        'email' => $githubUser->email,
+        'github_token' => $githubUser->token,
+        'github_refresh_token' => $githubUser->refreshToken,
+        'password' => $githubUser->token,
+        'image' => $githubUser->avatar,
+    ]);
+    Auth::login($githubUser);
+    if (Auth::user()->role === null) {
+        return redirect('/dashboard-role');
+    }else{
+        return to_route('jobPosts.index');
+    }
+
+    // $user->token
+});

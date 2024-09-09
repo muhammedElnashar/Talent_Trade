@@ -259,8 +259,13 @@
                     <a class="dropdown-toggle profile-pic me-5" data-bs-toggle="dropdown" href="#"
                        aria-expanded="false">
                         <div class="avatar-sm">
+                            @if(\Illuminate\Support\Facades\Auth::user()->github_id)
+                                <img src={{Auth::user()->image}} alt="..."
+                                     class="avatar-img rounded-circle" />
+                            @else
                             <img src={{asset("images/users/".Auth::user()->image)}} alt="..."
                                  class="avatar-img rounded-circle" />
+                                @endif
                         </div>
                         <span class="profile-username">
                                 <span class="op-7">Hi,</span>
@@ -272,8 +277,13 @@
                             <li>
                                 <div class="user-box">
                                     <div class="avatar-lg">
-                                        <img src={{asset("images/users/".Auth::user()->image)}} alt="image-profile"
-                                             class="avatar-img rounded" />
+                                        @if(\Illuminate\Support\Facades\Auth::user()->github_id)
+                                            <img src={{Auth::user()->image}} alt="..."
+                                                 class="avatar-img rounded-circle" />
+                                        @else
+                                            <img src={{asset("images/users/".Auth::user()->image)}} alt="..."
+                                                 class="avatar-img rounded-circle" />
+                                        @endif
                                     </div>
                                     <div class="u-text">
                                         <h4>{{ Auth::user()->name }}</h4>
