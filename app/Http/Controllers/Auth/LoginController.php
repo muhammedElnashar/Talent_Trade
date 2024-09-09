@@ -37,7 +37,7 @@ class LoginController extends Controller
             return route('candidateDashboard');
     }
     }*/
-    protected $redirectTo = '/Dashboard';
+    protected $redirectTo = '/Dashboard/jobPosts';
 
     /**
      * Create a new controller instance.

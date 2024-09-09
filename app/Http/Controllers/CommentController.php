@@ -8,9 +8,17 @@ use App\Models\Candidate;
 use App\Models\Comment;
 use App\Models\JobPost;
 use App\Models\Application;
+use App\Models\User;
+use App\Notifications\Status;
 use Illuminate\Support\Facades\Auth;
+
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -30,18 +38,21 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentRequest $request,Comment $comment)
+    public function store(StoreCommentRequest $request, Comment $comment,User $user)
     {
 
-     $data = $request->all();
-         $candidate=Candidate::where('user_id',Auth::id())->first();
-     $data['candidate_id'] =$candidate->id;
-     $post = JobPost::findOrFail($data['job_post_id']);
-     $post->comments()->create($data);
-    Application::create([
-        'job_post_id' => $data['job_post_id'],
-        'candidate_id' => $data['candidate_id'],
-    ]);
+        $data = $request->all();
+        $candidate = Candidate::where('user_id', Auth::id())->first();
+        $data['candidate_id'] = $candidate->id;
+        $post = JobPost::findOrFail($data['job_post_id']);
+        $post->comments()->create($data);
+       $application= Application::create([
+            'job_post_id' => $data['job_post_id'],
+            'candidate_id' => $data['candidate_id'],
+        ]);
+/*        $app = Application:: findOrFail($application->id);
+               $user->notify(new Status($app->status));*/
+
         // Redirect back to the job post page with a success message
         return redirect()->back()->with('success', 'Comment added successfully!');
     }

@@ -1,4 +1,4 @@
-@extends("dashboard")
+@extends("test")
 
 @section("title")
 @endsection

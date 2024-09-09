@@ -20,7 +20,7 @@ class CandidateController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('is_candidate')->except('create','store');
+        $this->middleware('is_candidate')->except('create','store','show','index');
         $this->middleware('Create_Without_Role')->only('create','store');
         $this->middleware('is_admin')->only('index','destroy');
     }
@@ -62,8 +62,7 @@ class CandidateController extends Controller
         $user = User::findorfail(Auth::id());
         $user['role']="candidate";
         $user->save();
-        return redirect()->route('candidateDashboard');
-        // return redirect()->route('candidate.index');
+        return to_route('jobPosts.index');
     }
 
     /**
@@ -71,9 +70,7 @@ class CandidateController extends Controller
      */
     public function show(Request $request,Candidate $candidate ,Technology $technology )
     {
-        if ($request->user()->cannot('update',$candidate)){
-            abort(401);
-        };
+
         $technology = Technology::all();
         return view('candidate.show' ,compact('candidate' ,'technology'));
     }

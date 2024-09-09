@@ -14,7 +14,7 @@ class EmployeeController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('is_employee')->except('create','store','show',"index");
+        $this->middleware('is_employee')->except('create','store','show',"index",'destroy');
         $this->middleware('Create_Without_Role')->only('create','store');
         $this->middleware('is_admin')->only('index','destroy');
     }
@@ -55,7 +55,7 @@ class EmployeeController extends Controller
         $user['role'] = "employee";
         $user->save();
 
-        return redirect()->route('employeeDashboard');
+        return to_route('jobPosts.index');
     }
 
     /**
@@ -63,8 +63,7 @@ class EmployeeController extends Controller
      */
     public function show(\Illuminate\Http\Request $request,Employee $employee)
     {
-
-        $jobs = JobPost::paginate(2);
+        $jobs = JobPost::where("employee_id",'=',$employee->id)->paginate(2);
         return view('employee.show', compact('employee', 'jobs'));
     }
 
@@ -101,6 +100,6 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-        return redirect()->route('employee.index');
+        return redirect()->back();
     }
 }

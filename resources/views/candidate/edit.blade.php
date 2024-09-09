@@ -1,4 +1,4 @@
-@extends("dashboard")
+@extends("test")
 
 @section("title")
 @endsection
@@ -7,7 +7,7 @@
 @endsection
 @section("content")
 <div class="container">
-    <div class=" card mt-5 w-75  " style="border-radius: 20px; margin-left: 180px">
+    <div class=" card mt-5   " style="border-radius: 20px;">
         <div class="card-header fw-bold h5" style="background-color: #4d91d1; border-radius: 20px 20px 0 0;"> UPDATE
         </div>
         <div class="card-body">

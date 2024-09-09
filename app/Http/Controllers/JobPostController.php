@@ -8,11 +8,14 @@ use App\Models\JobPost;
 use App\Models\Category;
 use App\Models\Technology;
 use App\Models\TechnologyJob;
+use App\Notifications\Status;
+use App\Notifications\StatusEmployee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Notification;
 
 class JobPostController extends Controller
 {
@@ -85,6 +88,9 @@ class JobPostController extends Controller
      */
     public function edit( Request $request,JobPost $jobPost)
     {
+        if ($request->user()->can('update',$jobPost)){
+            abort(401);
+        }
         $categories = Category::all();
         $technologies = Technology::all();
 
@@ -96,6 +102,7 @@ class JobPostController extends Controller
      */
     public function update(UpdateJobPostRequest $request, JobPost $jobPost)
     {
+
         $request_data = $request->all();
         $employee = Employee::where('user_id','=',Auth::id())->first();
         $request_data['employee_id'] = $employee->id;
@@ -112,7 +119,7 @@ class JobPostController extends Controller
 
             ]);
         }
-        return  redirect()->back();
+        return  to_route('jobPosts.show',$jobPost);
 /*        return redirect()->route('jobPosts.index', compact('jobPost'))->with('success', 'Job post updated successfully');*/
     }
 
@@ -122,11 +129,15 @@ class JobPostController extends Controller
     public function destroy(JobPost $jobPost)
     {
         $jobPost->delete();
-        return to_route('pending_posts');
+        return redirect()->back();
     }
     public function reject_status(JobPost $jobPost){
+        $emp = Employee::findOrFail($jobPost->employee_id);
+        $user = User::findOrFail($emp->user_id);
         $jobPost->status = 'rejected';
         $jobPost->save();
+        Notification::send($user,new StatusEmployee($jobPost->status,$user->name));
+
         return redirect()->back();
     }
     public function approved_status(JobPost $jobPost){

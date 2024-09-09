@@ -1,4 +1,4 @@
-@extends("dashboard")
+@extends("test")
 
 @section("title")
     Uodate Employee
@@ -34,20 +34,14 @@
                 <label for="logo">Logo</label>
                 <input type="file" name="logo" class="form-control">
                 @if($employee->logo)
-                    <img src="{{ asset('images/logos/' . $employee->logo) }}" alt="Logo" width="100" class="mt-3">
+                    <img src="{{ asset('images/users/' . $employee->logo) }}" alt="Logo" width="100" class="mt-3">
                 @endif
                 @error('logo')
                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="form-group mt-3">
-                <label for="user_id">User ID</label>
-                <input type="number" name="user_id" class="form-control"  value="{{ $employee->user_id }}">
-                @error('user_id')
-                <div class="alert alert-danger mt-2">{{ $message }}</div>
-                @enderror
-            </div>
+
 
             <button type="submit" class="btn btn-primary mt-3">Update Employee</button>
         </form>

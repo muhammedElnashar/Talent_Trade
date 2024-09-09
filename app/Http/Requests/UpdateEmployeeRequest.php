@@ -25,7 +25,6 @@ class UpdateEmployeeRequest extends FormRequest
                  'company_name' => 'required',
                  'location' => 'required',
                  'logo' => 'image|mimes:jpeg,png,jpg|max:2048',
-                 'user_id' => 'required|exists:users,id',
         ];
     }
 }

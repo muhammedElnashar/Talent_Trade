@@ -1,4 +1,4 @@
-@extends("dashboard")
+@extends(\Illuminate\Support\Facades\Auth::user()->role === 'admin' ? 'dashboard' : 'test')
 
 @section("title")
     Test
@@ -71,6 +71,15 @@
                                 <p class="text-muted mb-0">{{ $employee->company_name }}</p>
                             </div>
                         </div>
+                        <hr>
+                        <div class="row">
+                            <form action="{{route("employee.edit",$employee)}}" method="put">
+                                @csrf
+                                @method("PUT")
+                                <button type="submit" class=" w-100 fw-bold btn btn-primary">Update</button>
+
+                            </form>
+                        </div>
 
                     </div>
                 </div>
@@ -78,53 +87,84 @@
             </div>
 
             <div class="col-8 ">
-                @foreach($jobs as $job)
+                @foreach($jobs as $jobPost)
                     <div class="row w-100">
                         <div class="col-12">
                             <div class="card my-2" >
-                                <div class="card-body">
-                                    <div class="d-flex mb-1">
+                                <div class="card-body position-relative">
+                                    @if($jobPost->status == 'pending')
+                                    <span class=" px-5 bg-warning text-white rounded-5 position-absolute fw-bold " style="right: 25px">{{$jobPost->status}}</span>
+                                    @elseif($jobPost->status == 'approved')
+                                        <span class=" px-5 bg-primary text-white rounded-5 position-absolute fw-bold " style="right: 25px">{{$jobPost->status}}</span>
+
+                                    @else
+                                        <span class=" px-5 bg-danger text-white rounded-5 position-absolute fw-bold " style="right: 25px">{{$jobPost->status}}</span>
+
+                                    @endif
+                                        <div class="d-flex mb-1">
+
                                         <img src="{{ asset('images/users/'.$user->image) }}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
                                         <div>
                                             <h3 class="m-0">{{ $employee->company_name }}</h3>
-                                            <small class="text-muted fs-6">{{ $job->created_at->format('F j, Y, g:i a') }}</small>
+                                            <small class="text-muted fs-6">{{ $jobPost->created_at->format('F j, Y, g:i a') }}</small>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <header>
-                                            <h3>{{$job->title}}</h3>
+                                            <h3>{{$jobPost->title}}</h3>
                                         </header>
                                         <div class="job-details my-2">
                                             <i class="fa fa-align-left"></i>
-                                            <strong class="ms-3">Description:</strong> {{$job->description}}
+                                            <strong class="ms-3">Description:</strong> {{$jobPost->description}}
                                         </div>
                                         <div class="job-details my-2">
                                             <i class="fa fa-dollar-sign"></i>
-                                            <strong class="ms-3">Salary:</strong> {{$job->salary}}
+                                            <strong class="ms-3">Salary:</strong> {{$jobPost->salary}}
                                         </div>
                                         <div class="job-details my-2">
                                             <i class="fa fa-map-marker-alt"></i>
-                                            <strong class="ms-3">Location:</strong> {{$job->location}}
+                                            <strong class="ms-3">Location:</strong> {{$jobPost->location}}
                                         </div>
                                         <div class="job-details my-2">
                                             <i class="fa fa-briefcase"></i>
-                                            <strong class="ms-3">Work Type:</strong> {{$job->work_type}}
+                                            <strong class="ms-3">Work Type:</strong> {{$jobPost->work_type}}
                                         </div>
                                         <div class="row">
                                             <div class="job-details my-2 col-8">
                                                 <i class="fa fa-calendar"></i>
-                                                <strong class="ms-3">Application Deadline:</strong> {{$job->dead_line}}
+                                                <strong class="ms-3">Application Deadline:</strong> {{$jobPost->dead_line}}
                                             </div>
                                             <div class="d-flex mb-1">
-                                                @foreach($job->technology as $jobTechnology)
+                                                @foreach($jobPost->technology as $jobTechnology)
                                                     <span class="fs-6 px-5 fw-bold mx-2 my-2 rounded-5 p-1 text-white" style="background-color: #0a5a97">{{$jobTechnology->technology_name}}</span>
                                                 @endforeach
                                             </div>
                                             <hr>
-                                            <div class="d-flex justify-content-end  ">
-                                                <button type="button" class="btn btn-primary px-5 fw-bold mx-2">Edit</button>
-                                                <button type="button" class="btn btn-danger px-5 fw-bold mx-2">Delete</button>
+                                            @php
+                                                $employee = \App\Models\Employee::findOrFail($jobPost->employee_id);
+                                            @endphp
+                                            @if(\Illuminate\Support\Facades\Auth::id() === $employee->user_id)
+                                           <div class="d-flex justify-content-between ">
+                                            <div>
+                                                <a href="{{ route('jobPosts.show', $jobPost->id) }}" class="btn fs-6 px-5 fw-bold mx-2 mb-3   rounded-5 rounded  ms-auto"
+                                                   style="background-color:#5867dd; color:white;border-radius:20px !important">More
+                                                    Details</a>
                                             </div>
+                                               <div class="d-flex justify-content-around  ">
+
+                                                   <form action="{{route("jobPosts.edit",$jobPost)}}" method="PUT">
+                                                       @csrf
+                                                       @method('put')
+                                                       <button type="submit" class="btn btn-primary px-5 fw-bold mx-2">Edit</button>
+                                                   </form>
+                                                   <form action="{{route("jobPosts.destroy",$jobPost)}}" method="post">
+                                                       @csrf
+                                                       @method('Delete')
+                                                       <button type="submit" class="btn btn-danger px-5 fw-bold mx-2">Delete</button>
+                                                   </form>
+                                               </div>
+                                           </div>
+                                            @endif
 
                                         </div>
 
@@ -137,6 +177,7 @@
                     {{ $jobs->links() }}
             </div>
         </div>
+
     </section>
 
 

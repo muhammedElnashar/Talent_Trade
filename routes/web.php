@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CandidateTechnologyController;
@@ -31,14 +33,15 @@ Route::prefix('Dashboard')->middleware('auth')->group(function () {
     Route::resource('candidate-technology', CandidateTechnologyController::class);
     Route::resource('comments', CommentController::class);
     Route::resource('jobPosts', JobPostController::class);
+    Route::resource('application', ApplicationController::class);
     Route::get('/pending-posts', [JobPostController::class, 'pending_post'])->name('pending_posts');
     Route::put('/reject-pending-status/{jobPost}', [JobPostController::class, 'reject_status'])->name('reject_status');
     Route::put('/approved-pending-status/{jobPost}', [JobPostController::class, 'approved_status'])->name('approved_status');
-    Route::get('/dashboard-role', function () {return view('auth/dashboard-role');})->name('dashboard_role');
     /*    Route::get('/', function () {return view('dashboard.employee');})->name("employeeDashboard")->middleware('is_employee');
         Route::get('/', function () {return view('dashboard.candidate');})->name("candidateDashboard")->middleware('is_candidate');*/
 
 });
+Route::get('/dashboard-role', function () {return view('auth/dashboard-role');})->name('dashboard_role')->middleware(['auth','Create_Without_Role']);
 
 
 

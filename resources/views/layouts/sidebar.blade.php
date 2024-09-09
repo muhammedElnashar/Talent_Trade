@@ -4,8 +4,8 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-                <img src={{asset("assets/img/kaiadmin/logo_light.svg")}} alt="navbar-brand" class="navbar-brand"
-                height="20" />
+                <a class="navbar-brand text-white"  style="font-family: 'Droid Sans Mono Dotted'; font-weight: bold;font-size: 25px" href="#">Talant Trade</a>
+
 
             </a>
             <div class="nav-toggle">
@@ -112,6 +112,40 @@
                                 <li>
                                     <a href="{{route('pending_posts')}}">
                                         <span class="sub-item">Pending Posts</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a data-bs-toggle="collapse" href="#candi">
+                            <i class="fas fa-table"></i>
+                            <p>Candidate</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="candi">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{route('candidate.index')}}">
+                                        <span class="sub-item">All Candidate</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a data-bs-toggle="collapse" href="#emp">
+                            <i class="fas fa-table"></i>
+                            <p>Employee</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="emp">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{route('employee.index')}}">
+                                        <span class="sub-item">All Employee</span>
                                     </a>
                                 </li>
 

@@ -12,12 +12,18 @@ use App\Models\Candidate;
 
 class CandidateTechnologyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_candidate');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -53,7 +59,7 @@ class CandidateTechnologyController extends Controller
      */
     public function show(CandidateTechnology $candidateTechnology)
     {
-       
+
     }
 
     /**

@@ -1,7 +1,6 @@
-@extends("dashboard")
+@extends("test")
 
 @section("title")
-    ss
 @endsection
 @section("css")
 

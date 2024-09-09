@@ -1,8 +1,11 @@
+@php
+$user =\Illuminate\Support\Facades\Auth::user();
+@endphp
 @extends("welcome")
 
 @section("title")
-    @if (\Illuminate\Support\Facades\Auth::user()->role)
-        {{\Illuminate\Support\Facades\Auth::user()->role}} Dashboard
+    @if ($user->role)
+        {{$user->role}} Dashboard
     @endif
 @endsection
 @section("css")

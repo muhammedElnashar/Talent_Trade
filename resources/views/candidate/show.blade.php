@@ -1,4 +1,4 @@
-@extends("dashboard")
+@extends(\Illuminate\Support\Facades\Auth::user()->role === 'admin' ? 'dashboard' : 'test')
 
 @section("title")
     Candidate
@@ -9,9 +9,11 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 @endpush
 @section("content")
+    @php
+        $user = \App\Models\User::findOrFail($candidate->user_id);
+    @endphp
     @auth
         <div class="container">
-            <section style="background-color: #eee;">
                 <div class="container py-5">
 
                     <div class="row">
@@ -19,19 +21,19 @@
                             <div class="card mb-4">
                                 <div class="card-body  mt-3">
                                     <div class="text-center">
-                                        <img src="{{asset('images/users/' . Auth::user()->image)}}" alt="avatar"
+                                        <img src="{{asset('images/users/' . $user->image)}}" alt="avatar"
                                              class="rounded-circle img-fluid mb-2" style="width: 15rem; height: 15rem">
                                     </div>
                                     <div class="container">
                                         <h5 class="fs-3 mb-2 fw-bold text-capitalize"><i
-                                                class="fa-solid fa-signature me-2"></i>{{Auth::user()->name}}</h5>
+                                                class="fa-solid fa-signature me-2"></i>{{$user->name}}</h5>
                                         <p class="text-muted fs-5 mb-1 "><i
-                                                class="fa-solid fa-user me-2"></i>{{Auth::user()->role}}</p>
+                                                class="fa-solid fa-user me-2"></i>{{$user->role}}</p>
                                         <p class="text-muted fs-5 mb-1"><i
                                                 class="fa-solid fa-pen-nib me-2"></i>{{$candidate->title}}</p>
 
                                         <p class="text-muted fs-5 mb-1 "><i
-                                                class="fa-solid fa-envelope me-2"></i>{{Auth::user()->email}}</p>
+                                                class="fa-solid fa-envelope me-2"></i>{{$user->email}}</p>
                                         <p class="text-muted fs-5 mb-4"><i
                                                 class="fa-solid fa-location-dot me-2"></i>{{$candidate->location}}</p>
                                     </div>
@@ -67,10 +69,7 @@
                                             <p class="mb-0 fw-bold">Name</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <span></span>
-                                            <p class="text-muted mb-0">{{$candidate->title}}
-                                                <span class="fw-bold fs-5">{{Auth::user()->name}}</span>
-                                            </p>
+                                                <span class="fw-bold fs-5">{{$user->name}}</span>
                                         </div>
                                     </div>
                                     <hr>
@@ -79,7 +78,7 @@
                                             <p class="mb-0 fw-bold">Email</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">{{Auth::user()->email}}</p>
+                                            <p class="text-muted mb-0">{{$user->email}}</p>
                                         </div>
                                     </div>
                                     <hr>
@@ -122,7 +121,7 @@
                                                 @foreach ($candidate->technology as $can)
                                                     <h1 class="col-2 badge rounded-pill bg-primary mx-2 p-2 fs-6 d-flex ">
                                                         @php
-                                                            $cand = App\Models\Candidate::where("user_id", '=', Auth::id())->first();
+                                                            $cand = App\Models\Candidate::where("user_id", '=', $user->id)->first();
                                                             $candTec = App\Models\CandidateTechnology::where('candidate_id', '=', $cand->id)
                                                                 ->where('technology_id', '=', $can->id)->first();
                                                         @endphp
@@ -178,19 +177,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <a href="{{route('candidate.edit', $candidate->id)}}"
-                                               class='btn btn-primary py-2 fw-bold fs-6 col-5 btn-sm px-4 mt-2'>
-                                                Update
-                                            </a>
-                                            <span class="col-2"></span>
-                                            <a href="{{route('Dashboard')}}"
-                                               class='btn btn-danger py-2 fw-bold fs-6 col-5 btn-sm px-4 mt-2'>
-                                                Dashboard
-                                            </a>
+                                    @can('is_candidate',$user)
+                                        <div class="col-12">
+                                            <div class=" text-center">
+                                                <a href="{{route('candidate.edit', $candidate->id)}}"
+                                                   class='btn btn-primary py-2  rounded-5 fw-bold fs-6 col-5 btn-sm px-4 mt-2'>
+                                                    Update
+                                                </a>
+
+                                            </div>
                                         </div>
-                                    </div>
+
+                                    @endcan
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-@extends("dashboard")
+@extends(\Illuminate\Support\Facades\Auth::user()->role === 'admin' ? 'dashboard' : 'test')
 
 @section("title")
     Job Post Details
@@ -90,12 +90,11 @@
 @endpush
 
 @section("content")
-<div class="container p-5" style=" width: 70%;">
-    <div class="card">
+    <div class="card w-75 mx-auto mt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>
-            <a href="/jobPosts" class="text-black"><i class="fa fa-arrow-left fa-lg"></i></a>
-            <stronge class="ms-3 fw-bold fs-2"> {{$jobPost->title}} </stronge>
+                <a href="{{route("jobPosts.index")}}" class="text-black"><i class="fa fa-arrow-left fa-lg"></i></a>
+                <stronge class="ms-3 fw-bold fs-2"> {{$jobPost->title}} </stronge>
             </div>
 
 
@@ -126,41 +125,77 @@
         </div>
         <div class="">
         </div>
-        @auth
-        <form action="{{ route('comments.store') }}" method="POST">
-            @csrf
-            <input type="hidden" name="job_post_id" value="{{$jobPost->id}}">
-            <input type="hidden" name="work_type" value="{{ $jobPost->work_type }}">
-            <div class="input-group mb-3 just mx-auto" style="width: 98%;">
-                <input type="text" class="form-control" id="comment" name="body" placeholder="apply a offer..." style="flex: 1;">
-                <button type="submit" class="btn btn-primary input-group-text" style="width:5%;" >
-                    <i class="fa fa-solid fa-comment"></i>
-                </button>
-            </div>
-        </form>
-        @endauth
+        @php
+            $user = \App\Models\User::all();
+        @endphp
+        @can("is_candidate",$user)
+
+            <form action="{{ route('comments.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="job_post_id" value="{{$jobPost->id}}">
+                <input type="hidden" name="work_type" value="{{ $jobPost->work_type }}">
+                <div class="input-group mb-3 just mx-auto" style="width: 98%;">
+                    <input type="text" class="form-control" id="comment" name="body" placeholder="apply a offer..." style="flex: 1;">
+                    <button type="submit" class="btn btn-primary input-group-text" style="width:5%;" >
+                        <i class="fa fa-solid fa-comment"></i>
+                    </button>
+                </div>
+            </form>
+        @endcan
     </div>
-    <div class="comments-section">
-            <h5>Job Offers</h5>
-            @foreach($comments as $comment)
-                @php
+    <div class="comments-section w-75 mx-auto mt-5">
+        <h5>Job Offers</h5>
+        @foreach($comments as $comment)
+            @php
                 $candidate = \App\Models\Candidate::findOrFail($comment->candidate_id);
                 $user= \App\Models\User::where('id','=',$candidate->user_id)->first();
-                 @endphp
-                <div class="card">
-                    <div class='card-header d-flex justify-content-between align-items-center'>
+                $application=\App\Models\Application::where('candidate_id','=',$candidate->id)->where('job_post_id','=',$comment->job_post_id)->first();
+            @endphp
+            <div class="card">
+                <div class='card-header d-flex justify-content-between align-items-center'>
                     <div class="d-flex align-items-center">
                         <img src="{{ asset('images/users/' . $user->image) }}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
-                        <p class="card-text"><strong>{{ $user->name }}</strong></p>
+                        <p class="card-text"><strong><a class="text-dark" href="{{route('candidate.show',$candidate)}}">{{ $user->name }}</a></strong></p>
                     </div>
 
-                        <p class="text-muted " style="font-weight:lighter">Posted on {{ $comment->created_at->format('F j, Y, g:i a') }}</p>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">{{ $comment->body }}</p>
-                    </div>
+                    <p class="text-muted " style="font-weight:lighter">Posted on {{ $comment->created_at->format('F j, Y, g:i a') }}</p>
                 </div>
-            @endforeach
-        </div>
-</div>
+                <div class="card-body">
+                    <p class="card-text">{{ $comment->body }}</p>
+                </div>
+                @php
+                    $employee = \App\Models\Employee::findOrFail($jobPost->employee_id);
+                @endphp
+                @if(\Illuminate\Support\Facades\Auth::id() === $employee->user_id)
+                    <div class="card-footer">
+                        <div class="ms-auto d-flex">
+
+                            <div class="ms-auto">
+                                <form  method="POST" action="{{route("application.update",$application)}}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="submit" value="Approved" class="btn rounded me-3  px-5 fw-bold "
+                                           style="background-color:#5867dd; color:white;border-radius:30px !important">
+                                </form>
+                            </div>
+
+                            <div>
+                                <form  method="POST" action="{{route("application.destroy",$application)}}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="submit" value="Reject" class="btn rounded btn-danger px-5 fw-bold "
+                                           style=" color:white;border-radius:30px !important">
+                                </form>
+                            </div>
+
+
+                        </div>
+                    </div>
+                @endif
+
+
+            </div>
+        @endforeach
+    </div>
+
 @endsection
