@@ -1,7 +1,7 @@
 @extends("dashboard")
 
 @section("title")
-    Test
+    Employee Profile
 @endsection
 @section("css")
 
@@ -14,8 +14,16 @@
                 <div class="card mb-4">
                     <div class="card-body text-center">
 
-                            <img src='{{asset("images/users/".Auth::user()->image)}}' alt="avatar"
-                                 class="rounded-circle shadow-4 mb-3" style="width: 200px; height:200px ">
+
+                        <div class="avatar-sm">
+                            @if(Auth::user()->github_id)
+                                <img src="{{Auth::user()->image}}" alt="avatar"
+                                     class="rounded-circle shadow-4 mb-3" style="width: 100px; height:100px ">
+                            @else
+                                <img src='{{asset("images/users/".Auth::user()->image)}}' alt="avatar"
+                                     class="rounded-circle shadow-4 mb-3" style="width: 200px; height:200px ">
+                            @endif
+                        </div>
                         <h5 class="my-3 font-weight-bold"><i class="fa fa-solid fa-signature me-2"></i>{{Auth::user()->name}}</h5>
                             <p class="text-muted mb-0">{{Auth::user()->role}}</p>
 
@@ -75,6 +83,7 @@
                 </div>
             </div>
         </div>
+        <h1 class="mx-auto col-md-8 ">MyJobs</h1>
         @foreach($jobs as $job)
             <div class="row">
                 <div class="col-md-8 offset-md-2">

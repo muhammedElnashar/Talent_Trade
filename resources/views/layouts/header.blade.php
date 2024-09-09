@@ -340,11 +340,19 @@
                             aria-expanded="false"
                         >
                             <div class="avatar-sm">
+                                @if(Auth::user()->github_id)
+                                    <img
+                                        src={{Auth::user()->image}}
+                                    alt="..."
+                                        class="avatar-img rounded-circle"
+                                    />
+                                @else
                                 <img
                                     src={{asset("images/users/".Auth::user()->image)}}
                                     alt="..."
                                     class="avatar-img rounded-circle"
                                 />
+                                @endif
                             </div>
                             <span class="profile-username">
                       <span class="op-7">Hi,</span>
