@@ -21,7 +21,8 @@ class CandidatePolicy
      */
     public function view(User $user, Candidate $candidate): bool
     {
-        //
+        return  $candidate->user_id == $user->id;
+
     }
 
     /**
@@ -37,7 +38,7 @@ class CandidatePolicy
      */
     public function update(User $user, Candidate $candidate): bool
     {
-        //
+        return  $candidate->user_id == $user->id;
     }
 
     /**

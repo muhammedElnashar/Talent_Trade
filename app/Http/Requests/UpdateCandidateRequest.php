@@ -11,7 +11,7 @@ class UpdateCandidateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class UpdateCandidateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cv' => [ 'file', 'mimes:pdf,docx,doc'],
+            'about' => ['required'],
+            'user_id' => ['required', 'exists:users,id'],
+            'title' => ['required'],
+            'location' => ['required'],
+            'education' => ['required'],
+            'phone' => ['required', 'numeric'],
         ];
     }
 }

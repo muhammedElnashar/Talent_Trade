@@ -28,7 +28,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+
+    protected $redirectTo = '/dashboard-role';
 
     /**
      * Create a new controller instance.
@@ -37,6 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware('guest');
     }
 
@@ -48,11 +50,11 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:1000'],
         ]);
     }
 
@@ -63,12 +65,15 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-
+    {        if (\request()->hasFile("image")) {
+        $image = \request()->file("image");
+        $imagePath = $image->store("images", "user_image");
+    }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'image' => $imagePath,
         ]);
     }
 }

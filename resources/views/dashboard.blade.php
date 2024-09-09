@@ -1,13 +1,21 @@
-@include("layouts.head")
-<!-- Sidebar -->
-@include("layouts.sidebar")
-<!-- End Sidebar -->
-<div class="main-panel">
-    @include("layouts.header")
-@yield("content")
-    <!-- Custom template | don't include it in your project! -->
-    @include("layouts.setting")
-    <!-- End Custom template -->
-</div>
-{{-- footer --}}
-@include("layouts.footer")
+@php
+$user =\Illuminate\Support\Facades\Auth::user();
+@endphp
+@extends("welcome")
+
+@section("title")
+    @if ($user->role)
+        {{$user->role}} Dashboard
+    @endif
+@endsection
+@section("css")
+
+@endsection
+@section("content")
+
+
+@endsection
+@section("script")
+
+@endsection
+

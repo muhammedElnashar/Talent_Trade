@@ -5,15 +5,38 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreJobPostRequest;
 use App\Http\Requests\UpdateJobPostRequest;
 use App\Models\JobPost;
+use App\Models\Category;
+use App\Models\Technology;
+use App\Models\TechnologyJob;
+use App\Notifications\Status;
+use App\Notifications\StatusEmployee;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Comment;
+use App\Models\User;
+use App\Models\Employee;
+use Illuminate\Support\Facades\Notification;
 
 class JobPostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_employee')->except('index','pending_post','reject_status','approved_status','show');
+        $this->middleware('is_admin')->only('pending_post','reject_status','approved_status');
+
+
+
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $JobPosts = JobPost::where('status','=','approved')->paginate(2);
+        $employees = Employee::all();
+        return view('JobPosts.index', compact('JobPosts', 'employees'));
     }
 
     /**
@@ -21,7 +44,11 @@ class JobPostController extends Controller
      */
     public function create()
     {
-        //
+        $jobPosts = JobPost::all();
+        $categories = Category::all();
+        $technologies = Technology::all();
+
+        return view('JobPosts.create', compact('jobPosts', 'categories', 'technologies'));
     }
 
     /**
@@ -29,7 +56,19 @@ class JobPostController extends Controller
      */
     public function store(StoreJobPostRequest $request)
     {
-        //
+        $request_data = $request->all();
+        $employee = Employee::where('user_id','=',Auth::id())->first();
+        $request_data['employee_id'] = $employee->id;
+        $jobPost = JobPost::create($request_data);
+        $tech = $request_data['technology_id'];
+        foreach ($tech as $technology) {
+            TechnologyJob::create([
+                    'technology_id' => $technology,
+                    'job_post_id' => $jobPost->id
+
+            ]);
+        }
+        return  to_route('jobPosts.index');
     }
 
     /**
@@ -37,15 +76,25 @@ class JobPostController extends Controller
      */
     public function show(JobPost $jobPost)
     {
-        //
+        $comments =  Comment::where('job_post_id', $jobPost->id)->get();
+        $users = User::all();
+
+        // dd($jobPost);
+        return view('JobPosts.show', compact('jobPost', 'comments', 'users'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(JobPost $jobPost)
+    public function edit( Request $request,JobPost $jobPost)
     {
-        //
+        if ($request->user()->can('update',$jobPost)){
+            abort(401);
+        }
+        $categories = Category::all();
+        $technologies = Technology::all();
+
+        return view('JobPosts.update', compact('jobPost', 'categories', 'technologies'));
     }
 
     /**
@@ -53,7 +102,25 @@ class JobPostController extends Controller
      */
     public function update(UpdateJobPostRequest $request, JobPost $jobPost)
     {
-        //
+
+        $request_data = $request->all();
+        $employee = Employee::where('user_id','=',Auth::id())->first();
+        $request_data['employee_id'] = $employee->id;
+        $jobPost->update($request_data);
+        $TechnologyJob = TechnologyJob::where('job_post_id','=',$jobPost->id)->get();
+        foreach ($TechnologyJob as $Tech){
+            $Tech->delete();
+    }
+        $tech = $request_data['technology_id'];
+        foreach ($tech as $technology) {
+            TechnologyJob::create([
+                'technology_id' => $technology,
+                'job_post_id' => $jobPost->id
+
+            ]);
+        }
+        return  to_route('jobPosts.show',$jobPost);
+/*        return redirect()->route('jobPosts.index', compact('jobPost'))->with('success', 'Job post updated successfully');*/
     }
 
     /**
@@ -61,6 +128,27 @@ class JobPostController extends Controller
      */
     public function destroy(JobPost $jobPost)
     {
-        //
+        $jobPost->delete();
+        return redirect()->back();
+    }
+    public function reject_status(JobPost $jobPost){
+        $emp = Employee::findOrFail($jobPost->employee_id);
+        $user = User::findOrFail($emp->user_id);
+        $jobPost->status = 'rejected';
+        $jobPost->save();
+        Notification::send($user,new StatusEmployee($jobPost->status,$user->name));
+
+        return redirect()->back();
+    }
+    public function approved_status(JobPost $jobPost){
+        $jobPost->status = 'approved';
+        $jobPost->save();
+        return redirect()->back();
+    }
+    public function pending_post(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    {
+        $pendingPosts = JobPost::where('status','=','pending')->paginate(2);
+        $employees = Employee::all();
+        return view('JobPosts.pendingPosts', compact('pendingPosts'));
     }
 }

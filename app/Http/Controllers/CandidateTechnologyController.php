@@ -5,15 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCandidateTechnologyRequest;
 use App\Http\Requests\UpdateCandidateTechnologyRequest;
 use App\Models\CandidateTechnology;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Candidate;
+
 
 class CandidateTechnologyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_candidate');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -29,7 +39,19 @@ class CandidateTechnologyController extends Controller
      */
     public function store(StoreCandidateTechnologyRequest $request)
     {
-        //
+        $data =  $request->all();
+        $user = Auth::id();
+        $candidate = Candidate::where('user_id', $user)->first();
+        $data['candidate_id'] = $candidate->id;
+            foreach ($request->technology_id as $key => $value) {
+
+                unset($data["technology_id"]);
+
+                $data = $data + ["technology_id" => $value];
+
+                CandidateTechnology::create($data);
+              }
+              return redirect()->back();
     }
 
     /**
@@ -37,7 +59,7 @@ class CandidateTechnologyController extends Controller
      */
     public function show(CandidateTechnology $candidateTechnology)
     {
-        //
+
     }
 
     /**
@@ -61,6 +83,7 @@ class CandidateTechnologyController extends Controller
      */
     public function destroy(CandidateTechnology $candidateTechnology)
     {
-        //
+         $candidateTechnology->delete();
+         return redirect()->back();
     }
 }

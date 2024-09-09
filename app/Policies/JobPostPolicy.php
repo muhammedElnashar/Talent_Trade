@@ -2,9 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Employee;
 use App\Models\JobPost;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class JobPostPolicy
 {
@@ -35,9 +37,9 @@ class JobPostPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, JobPost $jobPost): bool
+    public function update( User $user,JobPost $jobPost): bool
     {
-        //
+        return  $jobPost->employee_id === $user->id;
     }
 
     /**

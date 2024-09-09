@@ -1,3 +1,5 @@
+
+
 <!--   Core JS Files   -->
 <script src={{asset("assets/js/core/jquery-3.7.1.min.js")}}></script>
 <script src={{asset("assets/js/core/popper.min.js")}}></script>
@@ -11,6 +13,8 @@
 
 <!-- jQuery Sparkline -->
 <script src={{asset("assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js")}}></script>
+{{--<script src={{asset("assets/js/setting-demo.js")}}></script>--}}
+{{--<script src={{asset("assets/js/demo.js")}}></script>--}}
 
 <!-- Chart Circle -->
 <script src={{asset("assets/js/plugin/chart-circle/circles.min.js")}}></script>
@@ -79,8 +83,7 @@
         },
     });
 </script>
-@yield("script")
+@stack("script")
 
 
-</body>
-</html>
+

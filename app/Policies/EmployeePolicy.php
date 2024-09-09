@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeePolicy
 {
@@ -37,7 +38,7 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee): bool
     {
-        //
+        return  $employee->user_id == $user->id;
     }
 
     /**

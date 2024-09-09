@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId("job_post_id")->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->enum('work_type', ['pending', 'approved', 'rejected']);
+            $table->enum('job_status', ['pending', 'approved', 'reject'])->default('pending');
             $table->timestamps();
         });
     }

@@ -11,6 +11,9 @@ class StoreJobPostRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if ($this->user()) {
+            return true;
+        }
         return false;
     }
 
@@ -22,7 +25,12 @@ class StoreJobPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'min:3'],
+            'description' => ['required', 'string', 'min:3', 'max:255'],
+            'salary' => ['required', 'integer', 'min:3'],
+            'location' => ['required', 'string', 'min:3', 'max:255'],
+            'dead_line' => ['required', 'date', 'min:3', 'max:255','after:date'],
+            'technology_id' => ['required','array','min:1'],
         ];
     }
 }
