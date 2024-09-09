@@ -124,8 +124,6 @@
                 <strong class="ms-3">Application Deadline:</strong> {{$jobPost->dead_line}}
             </div>
         </div>
-        <div class="">
-        </div>
         @auth
         <form action="{{ route('comments.store') }}" method="POST">
             @csrf
