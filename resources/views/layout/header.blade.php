@@ -295,8 +295,6 @@
                                             $employee = App\Models\Employee::where('user_id', $authUser)->first();
                                         @endphp
                                         @can("is_candidate",$user)
-
-
                                             @if ($authUser == $candidate->user_id )
                                                 <a href="{{route('candidate.show',$candidate->id)}}"
                                                    class="btn btn-xs btn-secondary btn-sm mt-2 fw-bold">View Profile</a>
@@ -304,8 +302,6 @@
 
                                         @endcan
                                         @can("is_employee",$user)
-
-
                                             @if ($authUser == $employee->user_id )
                                                 <a href="{{route('employee.show',$employee->id)}}"
                                                    class="btn btn-xs btn-secondary btn-sm mt-2 fw-bold">View Profile</a>
@@ -316,8 +312,7 @@
                                 </div>
                             </li>
                             <li>
-                                <!-- <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">My Profile</a> -->
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -329,11 +324,13 @@
                                 </form>
                             </li>
 
+
                         </div>
                     </ul>
                 </li>
         </ul>
         @endguest
+
 
     </div>
 </nav>

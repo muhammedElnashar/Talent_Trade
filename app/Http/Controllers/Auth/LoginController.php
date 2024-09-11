@@ -26,18 +26,16 @@ class LoginController extends Controller
      *
      * @var string
      */
-  /*  protected function redirectTo()
+   protected function redirectTo()
     {
-        switch (Auth::user()->role) {
-        case 'admin':
-            return route('adminDashboard');
-        case 'employee':
-            return route('employeeDashboard');
-        case 'candidate':
-            return route('candidateDashboard');
+        if (Auth::user()->role === 'admin') {
+            return '/Dashboard';
+    }else{
+        return route("jobPosts.index");
+        }
+
     }
-    }*/
-    protected $redirectTo = '/Dashboard/jobPosts';
+/*    protected $redirectTo = '/Dashboard/jobPosts';*/
 
     /**
      * Create a new controller instance.

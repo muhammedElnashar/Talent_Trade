@@ -80,8 +80,8 @@
     @section("content")
         @foreach ($JobPosts as $jobPost)
             <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <div class="card my-3" style="margin-top: 50px !important;">
+                <div class="col-md-8 offset-md-2 sha">
+                    <div class="card my-3 shadow" style="margin-top: 50px !important;">
                         <div class="card-body">
                             <div class="d-flex mb-3">
                                 @php
@@ -122,10 +122,10 @@
                 <div>
                     {{ $JobPosts->links() }}
                 </div>
-                <div>
+                <div class=" " style="margin-right: -310px">
                     @can("is_employee",\Illuminate\Support\Facades\Auth::user()->role)
 
-                        <a href="{{route('jobPosts.create')}}" class="btn btn-primary fw-bold rounded-5 px-5">Create New Post</a>
+                        <a href="{{route('jobPosts.create')}}" class="btn btn-primary fw-bold rounded-5 px-5 ">Create New Post</a>
 
                     @endcan
 

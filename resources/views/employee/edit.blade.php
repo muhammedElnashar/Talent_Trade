@@ -8,8 +8,11 @@
 @endsection
 @section("content")
     <div class="container">
-        <h1>Edit Employee</h1>
-
+<div class="card mt-5" style="border-radius: 20px" >
+    <div class="card-header fw-bold h3 text-white " style="background-color: #34495e;border-radius: 20px 20px 0 0 " >
+        Edit My Profile
+    </div>
+    <div class="card-body">
         <form action="{{ route('employee.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -45,6 +48,9 @@
 
             <button type="submit" class="btn btn-primary mt-3">Update Employee</button>
         </form>
+
+    </div>
+</div>
     </div>
 @endsection
 @section("script")
