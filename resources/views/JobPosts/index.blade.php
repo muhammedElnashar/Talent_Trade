@@ -78,6 +78,78 @@
 
     @endpush
     @section("content")
+    <div class="mx-auto mt-2" style="width: 42% !important;">
+        <div class="formm-group">
+            <form action="{{ route('search') }}" method="GET">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="search" placeholder="Search...">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>      
+            </form>
+        </div>
+    </div>
+                <div class="col-12 offset-2">
+                    <div class="row">
+                        <div class="col-8">
+ @if(isset($result))
+   
+    @foreach ($result as $jobPost)
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card my-3" style="margin-top: 50px !important;">
+                        <div class="card-body">
+                            <div class="d-flex mb-3">
+                                @php
+
+                                    $employee = App\Models\Employee::where('id','=', $jobPost->employee_id)->first();
+                                    $user = App\Models\User::where('id','=', $employee->user_id)->first();
+                                @endphp
+                                <img src="{{ asset('images/users/'.$user->image)}}"
+                                     style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
+                                <div>
+                                    <a class="text-decoration-none text-dark"  href="{{ route('employee.show', $employee->id) }}">
+                                        <h3 class="m-0">{{ $user->name}}</h3>
+                                    </a>
+                                    <small class="text-muted fs-6">{{ $jobPost->created_at->format('F j, Y, g:i a') }}</small>
+                                </div>
+                            </div>
+
+                            <h5 class="fs-4 text-black">{{ $jobPost->title }}</h5>
+                            <p>{{ $jobPost->description }}</p>
+
+                            <div class="d-flex mb-1">
+                                @foreach($jobPost->technology as $jobTechnology)
+                                    <span class="fs-6 px-5 fw-bold mx-2 my-2 rounded-5 p-1 text-white" style="background-color: #0a5a97">{{$jobTechnology->technology_name}}</span>
+                                @endforeach
+                            </div>
+                            <div class="card-footer d-flex">
+                                <a href="{{ route('jobPosts.show', $jobPost->id) }}" class="btn fs-6 px-5 fw-bold mx-2  rounded-5 rounded  ms-auto"
+                                   style="background-color:#5867dd; color:white;border-radius:20px !important">More
+                                    Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    @endforeach
+    <div class="">
+            <div class='d-flex justify-content-around  my-3' >
+                <div>
+                    {{ $result->links() }}
+                </div>
+                <div>
+                    @can("is_employee",\Illuminate\Support\Facades\Auth::user()->role)
+
+                        <a href="{{route('jobPosts.create')}}" class="btn btn-primary fw-bold rounded-5 px-5">Create New Post</a>
+
+                    @endcan
+
+                </div>
+            </div>
+
+        </div>
+    @else
+
         @foreach ($JobPosts as $jobPost)
             <div class="row">
                 <div class="col-md-8 offset-md-2">
@@ -117,7 +189,8 @@
                 </div>
             </div>
         @endforeach
-        <div class="container">
+    
+        <div class="">
             <div class='d-flex justify-content-around  my-3' >
                 <div>
                     {{ $JobPosts->links() }}
@@ -133,8 +206,16 @@
             </div>
 
         </div>
+        </div>
+    @endif
 
-    @endsection
+                        </div>
+                        
+                    </div>
+                </div>
+   
+   
+        @endsection
     @push("script")
 
     @endpush

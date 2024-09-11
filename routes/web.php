@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\TechnologyController;
+use Illuminate\Support\Str;
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -80,3 +81,36 @@ Route::get('/auth/callback', function () {
 
     // $user->token
 });
+Route::get('/auth/linkedin/redirect', function () {
+    return Socialite::driver('linkedin')->redirect();
+})->name('auth.linkedin');
+Route::get('/auth/linkedin/callback', function () {
+    try {
+        // Retrieve user from LinkedIn
+        $linkedinUser = Socialite::driver('linkedin')->user();
+
+        // Update or create user in your application
+        $user = User::updateOrCreate(
+            ['linkedin_id' => $linkedinUser->id],
+            [
+                'name' => $linkedinUser->name,
+                'email' => $linkedinUser->email,
+                'linkedin_token' => $linkedinUser->token,
+                'linkedin_refresh_token' => $linkedinUser->refreshToken,
+                'password' => bcrypt(Str::random(16)), // Generate a random password
+                'image' => $linkedinUser->avatar,
+            ]
+        );
+
+        // Log the user in
+        Auth::login($user);
+
+        // Redirect to the home page
+        return redirect('/home');
+    } catch (\Exception $e) {
+        // Log the error message
+        \Log::error('LinkedIn Authentication Error: ' . $e->getMessage());
+        return redirect('/login')->withErrors('Authentication failed. Please try again.');
+    }
+});
+Route::get('/search', [JobPostController::class, 'search'])->name('search');

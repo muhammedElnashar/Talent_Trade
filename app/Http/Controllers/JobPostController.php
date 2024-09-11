@@ -22,7 +22,7 @@ class JobPostController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('is_employee')->except('index','pending_post','reject_status','approved_status','show');
+        $this->middleware('is_employee')->except('index','pending_post','reject_status','approved_status','show','search');
         $this->middleware('is_admin')->only('pending_post','reject_status','approved_status');
 
 
@@ -150,5 +150,14 @@ class JobPostController extends Controller
         $pendingPosts = JobPost::where('status','=','pending')->paginate(2);
         $employees = Employee::all();
         return view('JobPosts.pendingPosts', compact('pendingPosts'));
+    }
+    public function search(Request $request){
+        $search = $request->input('search');
+        $result = JobPost::where('title', 'like', '%' . $search . '%')->
+        orwhere('description', 'like', '%' . $search . '%')->
+        orwhere('location', 'like', '%' . $search . '%')
+        ->paginate(2);
+        // dd($result);
+        return view('JobPosts.index', compact('result'));
     }
 }
