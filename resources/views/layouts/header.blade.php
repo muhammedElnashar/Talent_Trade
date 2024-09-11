@@ -85,8 +85,7 @@
                                     <hr>
 
                                 @empty
-                                    <a href="#" class="notif" > NO Record</a>
-
+                                    <p href="#" class="notif" > NO Record</p>
                                 @endforelse
                             </li>
                             <li>

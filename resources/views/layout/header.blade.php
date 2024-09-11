@@ -208,18 +208,20 @@
                 </ul>
             </li>
             @php
-                $user = \App\Models\User::findOrFail(\Illuminate\Support\Facades\Auth::id())
+
+                $user = \App\Models\User::findOrFail(\Illuminate\Support\Facades\Auth::id());
             @endphp
             <li class="nav-item ">
                 <a class="nav-link dropdown-toggle" href="#" id="noti   fDropdown" role="button"
                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bell"></i>
-                    <span class="notification">{{count($user->notifications)}}</span>
-                </a>
+                    @if($user->unreadNotifications()->count() > 0)
+                        <span class="notification">{{$user->notifications()->where("read_at",'=',null)->count()}}</span>
+                    @endif                </a>
                 <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                     <li>
                         <div class="dropdown-title">
-                            You have {{count($user->notifications)}} new notification
+                            You have {{$user->unreadNotifications()->count()}} new notification
                         </div>
                     </li>
 
@@ -227,10 +229,29 @@
                         <div class="notif-scroll scrollbar-outer">
                             <div class="notif-center">
                                 @forelse($user->notifications as $notification)
-                                    <a href="#" class="notif" >{{$notification->data['data']}}</a>
+
+                                    <div class="d-flex mt-3 ">
+                                        <div class="ms-1 me-2">
+                                            <img src="{{asset("default.png")}}" alt="..."
+                                                 class="avatar rounded-circle"  />
+                                        </div>
+                                        <div class="container-fluid">
+                                            @if($notification->read_at === null)
+                                                <a href="{{route('jobPosts.show',[$notification->data['job_id'],'id'=>$notification->id])}}"  class="notif-title text-primary"> Admin {{$notification->data['status']}} Your Post For New Jop </a>
+                                            @else
+                                                <span class="notif-title">Admin {{$notification->status}} Your Post For New Jop  </span>
+
+
+                                            @endif
+                                            <div>
+                                                <small class="notif-date">{{ $notification->created_at->diffForHumans() }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+
                                 @empty
                                     <a href="#" class="notif" > NO Record</a>
-
                                 @endforelse
                             </div>
                         </div>

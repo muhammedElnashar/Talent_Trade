@@ -115,28 +115,63 @@
                         <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group mt-3">
-                                <input id="email" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required >
+                                <input id="email" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"  >
                                 <label class="form-control-placeholder" for="Email">Username</label>
                             </div>
+                            @error('name')
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col alert alert-danger mt-2 ms-5">{{ $message }}</div>
+                                <div class="col-1"></div>
+                            </div>
+                            @enderror
+
                             <div class="form-group mt-3">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required >
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  >
                                 <label class="form-control-placeholder" for="Email">Email</label>
                             </div>
+                            @error('email')
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col alert alert-danger mt-2 ms-5">{{ $message }}</div>
+                                <div class="col-1"></div>
+                            </div>
+                            @enderror
                             <div class="form-group">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control " name="password"  >
                                 <label class="form-control-placeholder" for="password">Password</label>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
+                            @error('password')
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col alert alert-danger mt-2 ms-5">{{ $message }}</div>
+                                <div class="col-1"></div>
+                            </div>
+                            @enderror
                             <div class="form-group">
-                                <input id="password_confirmation" type="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" >
                                 <label class="form-control-placeholder" for="password_confirmation">Confirm Password</label>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
-
+                            @error('password_confirmation')
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col alert alert-danger mt-2 ms-5">{{ $message }}</div>
+                                <div class="col-1"></div>
+                            </div>
+                            @enderror
                             <div class="input-group mb-3">
                                 <input type="file" class="form-control" name="image">
                                 <label class="input-group-text"  for="inputGroupFile02">Image</label>
                             </div>
+                            @error('image')
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col alert alert-danger mt-2 ms-5">{{ $message }}</div>
+                                <div class="col-1"></div>
+                            </div>
+                            @enderror
 
                             <div class="form-group">
                                 <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>

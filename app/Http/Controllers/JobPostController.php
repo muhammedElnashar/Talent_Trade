@@ -90,6 +90,16 @@ class JobPostController extends Controller
      */
     public function show(JobPost $jobPost)
     {
+        if (isset(\request()->all()['id'])){
+
+            $id=\request()->all()['id'];
+            $readable= Auth::user()->notifications;
+            foreach ($readable as $read){
+                if($read->id == $id){
+                    $read->markAsRead();
+                }
+            }
+        }
         $comments =  Comment::where('job_post_id', $jobPost->id)->get();
         $users = User::all();
 
@@ -150,8 +160,7 @@ class JobPostController extends Controller
         $user = User::findOrFail($emp->user_id);
         $jobPost->status = 'rejected';
         $jobPost->save();
-        Notification::send($user,new StatusEmployee($jobPost->status,$user->name));
-
+        Notification::send($user,new StatusEmployee($jobPost->created_at,$jobPost->status,$jobPost->id));
         return redirect()->back();
     }
     public function approved_status(JobPost $jobPost){

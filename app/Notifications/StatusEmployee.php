@@ -14,11 +14,11 @@ class StatusEmployee extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct($status,$user)
+    public function __construct($created_at,$status,$job_id)
     {
+        $this->created_at = $created_at;
         $this->status = $status;
-        $this->user = $user;
-
+        $this->job_id = $job_id;
     }
 
     /**
@@ -50,8 +50,9 @@ class StatusEmployee extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'created_at' => $this->created_at,
             'status' =>$this->status,
-            'user' =>$this->user
+            'job_id' => $this->job_id,
 
         ];
     }
