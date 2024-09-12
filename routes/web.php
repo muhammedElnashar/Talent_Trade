@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\TechnologyController;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
-
 
 Route::get('/', function () {
     if (!Auth::check()) {
@@ -60,8 +60,11 @@ Route::get('/auth/callback', function () {
     Auth::login($githubUser);
     if (Auth::user()->role === null) {
         return redirect('/dashboard-role');
-    }else{
+    } else {
         return to_route('jobPosts.index');
     }
 
+    // $user->token
 });
+
+Route::get('/search', [JobPostController::class, 'search'])->name('search');

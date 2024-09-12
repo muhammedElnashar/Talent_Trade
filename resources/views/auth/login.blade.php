@@ -102,6 +102,7 @@
                             <div class="w-100">
                                 <p class="social-media d-flex justify-content-end">
                                 <a href="{{route('auth.github')}}" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-github"></span></a>
+                                <a href="{{route('auth.linkedin')}}" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-linkedin"></span></a>
                                 </p>
                             </div>
                         </div>
