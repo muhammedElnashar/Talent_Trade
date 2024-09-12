@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
 use App\Models\Application;
+use App\Models\Candidate;
+use App\Models\Employee;
+use App\Models\JobPost;
 use App\Models\User;
 use App\Notifications\Status;
+use App\Notifications\StatusCandidateFromEmployee;
 use Illuminate\Support\Facades\Notification;
 
 class ApplicationController extends Controller
 
 {
-public function __construct()
-{
-    $this->middleware('auth');
-    $this->middleware('is_employee');
-}
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_employee');
+    }
 
     /**
      * Display a listing of the resource.
@@ -63,10 +67,25 @@ public function __construct()
      */
     public function update(UpdateApplicationRequest $request, Application $application)
     {
-        $user = User::all();
+        //user data
+        $cand = Candidate::findOrFail($application->candidate_id);
+        $user = User::findOrFail($cand->user_id);
+
         $application->job_status = "approved";
         $application->save();
-        Notification::send($user,new Status($application->job_status));
+
+
+        //notification data
+        $jobPost = JobPost::findOrFail($application->job_post_id);
+        $emp = Employee::findOrFail($jobPost->employee_id);
+        $EmpUser = User::findOrFail($emp->user_id);
+        $username = $EmpUser->name;
+        $userImage = $EmpUser->image;
+        $created_at = $application->updated_at;
+        $userRole = $EmpUser->role;
+        $job_id = $application->job_post_id;
+        $job_status = $application->job_status;
+        Notification::send($user, new StatusCandidateFromEmployee($username, $userImage, $created_at, $userRole, $job_id, $job_status));
         return redirect()->back();
     }
 
@@ -76,10 +95,23 @@ public function __construct()
      */
     public function destroy(Application $application)
     {
-        $user = User::all();
+        //user data
+        $cand = Candidate::findOrFail($application->candidate_id);
+        $user = User::findOrFail($cand->user_id);
         $application->job_status = "rejected";
         $application->save();
-        Notification::send($user,new Status($application->job_status));
+
+        //notification data
+        $jobPost = JobPost::findOrFail($application->job_post_id);
+        $emp = Employee::findOrFail($jobPost->employee_id);
+        $EmpUser = User::findOrFail($emp->user_id);
+        $username = $EmpUser->name;
+        $userImage = $EmpUser->image;
+        $created_at = $application->updated_at;
+        $userRole = $EmpUser->role;
+        $job_id = $application->job_post_id;
+        $job_status = $application->job_status;
+        Notification::send($user, new StatusCandidateFromEmployee($username, $userImage, $created_at, $userRole, $job_id, $job_status));
         return redirect()->back();
 
     }

@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Technology;
 use App\Models\TechnologyJob;
 use App\Notifications\Status;
+use App\Notifications\StatusAdmin;
 use App\Notifications\StatusEmployee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,6 @@ class JobPostController extends Controller
         $jobPosts = JobPost::all();
         $categories = Category::all();
         $technologies = Technology::all();
-
         return view('JobPosts.create', compact('jobPosts', 'categories', 'technologies'));
     }
 
@@ -57,9 +57,18 @@ class JobPostController extends Controller
     public function store(StoreJobPostRequest $request)
     {
         $request_data = $request->all();
+        //Notification user Data
+        $user=User::where('role', '=', 'admin')->first();
         $employee = Employee::where('user_id','=',Auth::id())->first();
+        $userEmployee = User::where('id','=',$employee->user_id)->first();
+        $username = $userEmployee->name;
+        $userImage = $userEmployee->image;
+
+
+        //create a new jopPost
         $request_data['employee_id'] = $employee->id;
         $jobPost = JobPost::create($request_data);
+
         $tech = $request_data['technology_id'];
         foreach ($tech as $technology) {
             TechnologyJob::create([
@@ -68,6 +77,11 @@ class JobPostController extends Controller
 
             ]);
         }
+
+        //Notification Post Data
+        $job=JobPost::where('id','=',$jobPost->id)->first();
+        $created_at = $job->created_at;
+        Notification::send($user,new StatusAdmin($username,$userImage,$created_at));
         return  to_route('jobPosts.index');
     }
 
@@ -76,6 +90,16 @@ class JobPostController extends Controller
      */
     public function show(JobPost $jobPost)
     {
+        if (isset(\request()->all()['id'])){
+
+            $id=\request()->all()['id'];
+            $readable= Auth::user()->notifications;
+            foreach ($readable as $read){
+                if($read->id == $id){
+                    $read->markAsRead();
+                }
+            }
+        }
         $comments =  Comment::where('job_post_id', $jobPost->id)->get();
         $users = User::all();
 
@@ -136,17 +160,31 @@ class JobPostController extends Controller
         $user = User::findOrFail($emp->user_id);
         $jobPost->status = 'rejected';
         $jobPost->save();
-        Notification::send($user,new StatusEmployee($jobPost->status,$user->name));
-
+        Notification::send($user,new StatusEmployee($jobPost->created_at,$jobPost->status,$jobPost->id));
         return redirect()->back();
     }
     public function approved_status(JobPost $jobPost){
+        $emp = Employee::findOrFail($jobPost->employee_id);
+        $user = User::findOrFail($emp->user_id);
         $jobPost->status = 'approved';
         $jobPost->save();
+        Notification::send($user,new StatusEmployee($jobPost->created_at,$jobPost->status,$jobPost->id));
         return redirect()->back();
     }
-    public function pending_post(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    public function pending_post()
     {
+        if (isset(\request()->all()['id'])){
+
+            $id=\request()->all()['id'];
+            $readable= Auth::user()->notifications;
+            foreach ($readable as $read){
+                if($read->id == $id){
+                    $read->markAsRead();
+                }
+            }
+        }
+
+
         $pendingPosts = JobPost::where('status','=','pending')->paginate(2);
         $employees = Employee::all();
         return view('JobPosts.pendingPosts', compact('pendingPosts'));

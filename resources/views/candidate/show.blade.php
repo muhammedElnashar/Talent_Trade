@@ -13,8 +13,7 @@
         $user = \App\Models\User::findOrFail($candidate->user_id);
     @endphp
     @auth
-        <div class="container">
-                <div class="container py-5">
+                <div class="col-10 offset-1 mt-5">
 
                     <div class="row">
                         <div class="col-lg-4">
@@ -194,8 +193,6 @@
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
     @endauth
 
 @endsection

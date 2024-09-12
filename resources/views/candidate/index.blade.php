@@ -7,6 +7,7 @@
 
 @endsection
 @section("content")
+    <div class="container">
         <div class="card mt-5" style="border-radius: 20px">
             <div class="card-header fw-bold h5 text-white " style="background-color: #34495e;border-radius: 20px 20px 0 0 " >
                 Candidate List
@@ -25,10 +26,17 @@
                     </tr>
                     </thead>
                     <tbody>
+
+
+
                     @foreach ($candidates as $candidate)
+                        @php
+                            $words = explode(' ', $candidate->about);
+                        $result = implode(' ', array_slice($words, 0, 3) ) . ' ...';
+                        @endphp
                         <tr>
                             <td>{{ $candidate->id }}</td>
-                            <td>{{ $candidate->about }}</td>
+                            <td>{{ $result}}</td>
                             <td>{{ $candidate->title }}</td>
                             <td>{{ $candidate->education }}</td>
                             <td>{{ $candidate->location }}</td>
@@ -45,6 +53,9 @@
             </div>
 
         </div>
+        {{$candidates->links()}}
+
+    </div>
 
 @endsection
 @section("script")

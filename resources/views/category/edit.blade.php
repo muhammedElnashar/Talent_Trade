@@ -20,7 +20,7 @@
                 @method('PUT')
                 <div class="form-group">
                     <label for="category_name " class="fs-5 fw-bold">Name</label>
-                    <input type="text" name="category_name" class=" mb-2 form-control" value="{{ old('category_name', $category->category_name) }}" required>
+                    <input type="text" name="category_name" class=" mb-2 form-control" value="{{ old('category_name', $category->category_name) }}" >
                     @error('category_name')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror

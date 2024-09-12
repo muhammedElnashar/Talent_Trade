@@ -11,20 +11,21 @@
 
         $user = \App\Models\User::findOrFail($employee->user_id);
  @endphp
-    <section class="container" style="margin-top: 3rem">
+
+    <section class="col-10 offset-1">
         <div class="row mt-2">
             <div class="col-4">
                 <div class="card mb-2 w-100">
                     <div class="card-body text-center">
 
-                        @if(\Illuminate\Support\Facades\Auth::user()->github_id)
-                            <img src={{Auth::user()->image}} alt="..."
-                                 class="avatar-img rounded-circle w-75" />
+                        @if($user->github_id)
+                            <img src={{$user->image}} alt="..."
+                                 class="avatar-img rounded-circle h-75 w-75" />
                         @else
-                            <img src={{asset("images/users/".Auth::user()->image)}} alt="..."
-                                 class="avatar-img rounded-circle" />
+                            <img src={{asset("images/users/".$user->image)}} alt="..."
+                                 class="avatar-img rounded-circle h-75 w-75" />
                         @endif
-                        <h5 class="my-3 font-weight-bold"><i class="fa fa-solid fa-signature me-2"></i>{{$user->name}}</h5>
+                        <h5 class="my-3 font-weight-bold fs-3 "><i class="fa fa-solid  fa-signature me-2"></i>{{$user->name}}</h5>
                             <p class="text-muted fs-5 mb-0"> <i class="fa fa-solid fa-signature me-2"></i>{{$user->role}}</p>
 
                     </div>
@@ -32,6 +33,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="text-center">
+
                             <img src='{{asset("images/users/".$employee->logo)}}' alt="avatar"
                                  class="rounded-circle shadow-4 mb-3" style="width: 150px; height:150px ">
                         </div>
@@ -89,7 +91,6 @@
 
                     </div>
                 </div>
-
             </div>
 
             <div class="col-8 ">
@@ -109,15 +110,15 @@
                                     @endif
                                         <div class="d-flex mb-1">
 
-                                            @if(\Illuminate\Support\Facades\Auth::user()->github_id)
-                                                <img src="{{ Auth::user()->image}}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" >
+                                            @if($user->github_id)
+                                                <img src="{{ $user->image}}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" >
 
                                             @else
                                                 <img src="{{ asset('images/users/'.$user->image) }}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
 
                                             @endif
                                         <div>
-                                            <h3 class="m-0">{{ $employee->company_name }}</h3>
+                                            <h3 class="m-0">{{ $user->name }}</h3>
                                             <small class="text-muted fs-6">{{ $jobPost->created_at->format('F j, Y, g:i a') }}</small>
                                         </div>
                                     </div>
@@ -167,12 +168,12 @@
                                                    <form action="{{route("jobPosts.edit",$jobPost)}}" method="PUT">
                                                        @csrf
                                                        @method('put')
-                                                       <button type="submit" class="btn btn-primary px-5 fw-bold mx-2">Edit</button>
+                                                       <button type="submit" class="btn btn-primary px-5 rounded-5 fw-bold mx-2">Edit</button>
                                                    </form>
                                                    <form action="{{route("jobPosts.destroy",$jobPost)}}" method="post">
                                                        @csrf
                                                        @method('Delete')
-                                                       <button type="submit" class="btn btn-danger px-5 fw-bold mx-2">Delete</button>
+                                                       <button type="submit" class="btn btn-danger rounded-5 px-5 fw-bold mx-2">Delete</button>
                                                    </form>
                                                </div>
                                            </div>

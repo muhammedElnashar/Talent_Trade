@@ -44,6 +44,8 @@
             </div>
 
         </div>
+        {{$employees->links()}}
+
     </div>
 @endsection
 @section("script")

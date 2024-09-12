@@ -19,7 +19,7 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        $technologys = Technology::all();
+        $technologys = Technology::paginate(3);
         return view("skills.index",compact('technologys') );
     }
 

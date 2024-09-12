@@ -88,10 +88,15 @@
                                 $employee = App\Models\Employee::where('id','=', $jobPost->employee_id)->first();
                                 $user = App\Models\User::where('id','=', $employee->user_id)->first();
                             @endphp
-                            <img src="{{ asset('images/users/'.$user->image)}}"
-                                 style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
+                            @if($user->github_id)
+                                <img src="{{ $user->image}}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" >
+
+                            @else
+                                <img src="{{ asset('images/users/'.$user->image) }}" style="width: 60px; height: 60px;" class="rounded-circle styl me-2" alt="User">
+
+                            @endif
                             <div>
-                                <a href="{{ route('employee.show', $employee) }}">
+                                <a class="text-dark" href="{{ route('employee.show', $employee) }}">
                                     <h3 class="m-0">{{ $user->name}}</h3>
                                 </a>
                                 <small class="text-muted fs-6">{{ $jobPost->created_at->format('F j, Y, g:i a') }}</small>

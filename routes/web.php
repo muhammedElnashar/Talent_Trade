@@ -13,20 +13,18 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\TechnologyController;
 use Illuminate\Support\Str;
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
     if (!Auth::check()) {
         return to_route('login');
     }
-    return view('dashboard')
-    ;
-})->name("dashboard");
+    abort('404');
+});
 Route::get('/test', function () {return view('test');});
 Auth::routes();
 Route::prefix('Dashboard')->middleware('auth')->group(function () {
-    Route::get('/', function () {return view('dashboard');})->name("Dashboard");
+    Route::get('/', function () {return view('dashboard');})->name("Dashboard")->middleware('is_admin');
     Route::resource('category', CategoryController::class);
     Route::resource('users', UserController::class);
     Route::get('/users-archive', [UserController::class, 'archive'])->name('users.archive');
@@ -41,26 +39,13 @@ Route::prefix('Dashboard')->middleware('auth')->group(function () {
     Route::get('/pending-posts', [JobPostController::class, 'pending_post'])->name('pending_posts');
     Route::put('/reject-pending-status/{jobPost}', [JobPostController::class, 'reject_status'])->name('reject_status');
     Route::put('/approved-pending-status/{jobPost}', [JobPostController::class, 'approved_status'])->name('approved_status');
-    /*    Route::get('/', function () {return view('dashboard.employee');})->name("employeeDashboard")->middleware('is_employee');
-        Route::get('/', function () {return view('dashboard.candidate');})->name("candidateDashboard")->middleware('is_candidate');*/
-
 });
 Route::get('/dashboard-role', function () {return view('auth/dashboard-role');})->name('dashboard_role')->middleware(['auth','Create_Without_Role']);
-
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('jobPosts', JobPostController::class);
-Route::resource('comments', CommentController::class);
-
-use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('github')->redirect();
 })->name('auth.github');
-
 Route::get('/auth/callback', function () {
-
     $githubUser = Socialite::driver('github')->user();
     $githubUser = User::updateOrCreate([
         'github_id' => $githubUser->id,
@@ -75,42 +60,11 @@ Route::get('/auth/callback', function () {
     Auth::login($githubUser);
     if (Auth::user()->role === null) {
         return redirect('/dashboard-role');
-    }else{
+    } else {
         return to_route('jobPosts.index');
     }
 
     // $user->token
 });
-Route::get('/auth/linkedin/redirect', function () {
-    return Socialite::driver('linkedin')->redirect();
-})->name('auth.linkedin');
-Route::get('/auth/linkedin/callback', function () {
-    try {
-        // Retrieve user from LinkedIn
-        $linkedinUser = Socialite::driver('linkedin')->user();
 
-        // Update or create user in your application
-        $user = User::updateOrCreate(
-            ['linkedin_id' => $linkedinUser->id],
-            [
-                'name' => $linkedinUser->name,
-                'email' => $linkedinUser->email,
-                'linkedin_token' => $linkedinUser->token,
-                'linkedin_refresh_token' => $linkedinUser->refreshToken,
-                'password' => bcrypt(Str::random(16)), // Generate a random password
-                'image' => $linkedinUser->avatar,
-            ]
-        );
-
-        // Log the user in
-        Auth::login($user);
-
-        // Redirect to the home page
-        return redirect('/home');
-    } catch (\Exception $e) {
-        // Log the error message
-        \Log::error('LinkedIn Authentication Error: ' . $e->getMessage());
-        return redirect('/login')->withErrors('Authentication failed. Please try again.');
-    }
-});
 Route::get('/search', [JobPostController::class, 'search'])->name('search');

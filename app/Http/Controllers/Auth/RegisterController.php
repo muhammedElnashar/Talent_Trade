@@ -53,9 +53,27 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8','confirmed'],
+            "password_confirmation" => ['required'],
             'image' => ['required','image','mimes:jpeg,png,jpg,gif,svg','max:1000'],
-        ]);
+        ],
+            [
+                'name.required' => 'Name is required',
+                'name.string' => 'Name must be a string',
+                'name.max' => 'Name should not exceed 255 characters',
+                'email.required' => 'Email is required',
+                'email.string' => 'Email must be a string',
+                'email.email' => 'Email must be a valid email address',
+                'email.max' => 'Email should not exceed 255 characters',
+                'email.unique' => 'Email already exists',
+                'password.required' => 'Password is required',
+                'password.string' => 'Password must be a string',
+                'password.min' => 'Password must be at least 8 characters long',
+                'password.confirm' => ' Password confirmation does not match',
+                'image.required' => 'Image is required',
+                'image.image' => 'Image must be an image file',
+            ]
+        );
     }
 
     /**

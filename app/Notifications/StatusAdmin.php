@@ -7,18 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class StatusEmployee extends Notification
+class StatusAdmin extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($created_at,$status,$job_id)
+    public function __construct($username,$userImage,$created_at)
     {
+        $this->username = $username;
+        $this->userImage = $userImage;
         $this->created_at = $created_at;
-        $this->status = $status;
-        $this->job_id = $job_id;
     }
 
     /**
@@ -50,10 +50,9 @@ class StatusEmployee extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'created_at' => $this->created_at,
-            'status' =>$this->status,
-            'job_id' => $this->job_id,
-
+                'name' => $this->username,
+                'image' => $this->userImage,
+                'created_at' => $this->created_at
         ];
     }
 }

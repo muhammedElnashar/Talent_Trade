@@ -60,6 +60,7 @@ Skills
 
             </div>
         </div>
+            {{$technologys->links()}}
 
     </div>
 

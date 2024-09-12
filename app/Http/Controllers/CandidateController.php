@@ -30,7 +30,7 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $candidates = Candidate::all();
+        $candidates = Candidate::paginate(3);
         return view('candidate.index', compact('candidates'));
     }
 
@@ -70,7 +70,16 @@ class CandidateController extends Controller
      */
     public function show(Request $request,Candidate $candidate ,Technology $technology )
     {
+        if (isset(\request()->all()['id'])){
 
+            $id=\request()->all()['id'];
+            $readable= Auth::user()->notifications;
+            foreach ($readable as $read){
+                if($read->id == $id){
+                    $read->markAsRead();
+                }
+            }
+        }
         $technology = Technology::all();
         return view('candidate.show' ,compact('candidate' ,'technology'));
     }

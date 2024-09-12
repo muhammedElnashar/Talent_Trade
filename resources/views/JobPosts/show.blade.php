@@ -186,7 +186,7 @@ Job Post Details
                 <div>
                     <form method="POST" action="{{route("application.destroy",$application)}}">
                         @csrf
-                        @method('PUT')
+                        @method('DELETE')
                         <input type="submit" value="Reject" class="btn rounded btn-danger px-5 fw-bold "
                             style=" color:white;border-radius:30px !important">
                     </form>
