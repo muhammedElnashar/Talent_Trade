@@ -53,6 +53,7 @@
             </div>
 
         </div>
+        {{$candidates->links()}}
 
     </div>
 

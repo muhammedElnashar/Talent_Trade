@@ -99,26 +99,26 @@ $user =\Illuminate\Support\Facades\Auth::user();
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3></h3> <!-- Replace with dynamic value -->
-                        <p>Some Description</p> <!-- Replace with dynamic description -->
+                        <h3>{{\Illuminate\Support\Facades\DB::table('employees')->count()}}</h3> <!-- Replace with dynamic value -->
+                        <p>Total Employees</p> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route("employee.index")}}" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-4 col-6">
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>123</h3> <!-- Replace with dynamic value -->
-                        <p>Some Description</p> <!-- Replace with dynamic description -->
+                        <h3>{{\Illuminate\Support\Facades\DB::table('candidates')->count()}}</h3> <!-- Replace with dynamic value -->
+                        <p>Total Candidates</p> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route('candidate.index')}}" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
     </div>
@@ -127,39 +127,39 @@ $user =\Illuminate\Support\Facades\Auth::user();
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>123</h3> <!-- Replace with dynamic value -->
-                        <p>Some Description</p> <!-- Replace with dynamic description -->
+                        <h3>{{\Illuminate\Support\Facades\DB::table('categories')->count()}}</h3> <!-- Replace with dynamic value -->
+                        <p>Total Categories</p> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route('category.index')}}" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-4 col-6">
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>123</h3> <!-- Replace with dynamic value -->
-                        <p>Some Description</p> <!-- Replace with dynamic description -->
+                        <h3>{{\Illuminate\Support\Facades\DB::table('technologies')->count()}}</h3> <!-- Replace with dynamic value -->
+                        <p>Total Skills</p> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route('skills.index')}}" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-4 col-6">
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>123</h3> <!-- Replace with dynamic value -->
-                        <p>Some Description</p> <!-- Replace with dynamic description -->
+                        <h3>{{\Illuminate\Support\Facades\DB::table('job_posts')->count()}}</h3> <!-- Replace with dynamic value -->
+                        <p>Total Posts</p> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{route('jobPosts.index')}}" class="small-box-footer"> More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
     </div>

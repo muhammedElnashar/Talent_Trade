@@ -117,12 +117,12 @@
                 </div>
             </div>
         @endforeach
-        <div class="container">
+        <div class="">
             <div class='d-flex justify-content-around  my-3' >
                 <div>
                     {{ $JobPosts->links() }}
                 </div>
-                <div class=" " style="margin-right: -310px">
+                <div class=" " style="margin-right: 450px">
                     @can("is_employee",\Illuminate\Support\Facades\Auth::user()->role)
 
                         <a href="{{route('jobPosts.create')}}" class="btn btn-primary fw-bold rounded-5 px-5 ">Create New Post</a>

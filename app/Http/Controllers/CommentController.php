@@ -6,10 +6,14 @@ use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Candidate;
 use App\Models\Comment;
+use App\Models\Employee;
 use App\Models\JobPost;
 use App\Models\Application;
 use App\Models\User;
 use App\Notifications\Status;
+use App\Notifications\StatusCandidate;
+use App\Notifications\StatusEmployee;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
@@ -42,6 +46,11 @@ class CommentController extends Controller
     {
 
         $data = $request->all();
+        //User who received notification
+        $job = JobPost::findOrFail($data['job_post_id']);
+        $emp =Employee::findOrFail($job->employee_id);
+        $user= User::findOrFail($emp->user_id);
+
         $candidate = Candidate::where('user_id', Auth::id())->first();
         $data['candidate_id'] = $candidate->id;
         $post = JobPost::findOrFail($data['job_post_id']);
@@ -50,10 +59,16 @@ class CommentController extends Controller
             'job_post_id' => $data['job_post_id'],
             'candidate_id' => $data['candidate_id'],
         ]);
-/*        $app = Application:: findOrFail($application->id);
-               $user->notify(new Status($app->status));*/
 
-        // Redirect back to the job post page with a success message
+       //Notification data
+        $cand = Candidate::findOrFail($application->candidate_id);
+        $UserCandidate = User::findOrFail($cand->user_id);
+        $username = $UserCandidate->name;
+        $userImage = $UserCandidate->image;
+        $userRole= $UserCandidate->role;
+        $candidateId =$cand->id;
+
+        Notification::send($user,new StatusCandidate($username,$application->created_at,$userImage,$userRole,$candidateId));
         return redirect()->back()->with('success', 'Comment added successfully!');
     }
 

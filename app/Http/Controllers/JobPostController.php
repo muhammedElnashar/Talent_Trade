@@ -164,8 +164,11 @@ class JobPostController extends Controller
         return redirect()->back();
     }
     public function approved_status(JobPost $jobPost){
+        $emp = Employee::findOrFail($jobPost->employee_id);
+        $user = User::findOrFail($emp->user_id);
         $jobPost->status = 'approved';
         $jobPost->save();
+        Notification::send($user,new StatusEmployee($jobPost->created_at,$jobPost->status,$jobPost->id));
         return redirect()->back();
     }
     public function pending_post()
