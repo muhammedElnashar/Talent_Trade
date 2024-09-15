@@ -39,6 +39,7 @@ Route::prefix('Dashboard')->middleware('auth')->group(function () {
     Route::get('/pending-posts', [JobPostController::class, 'pending_post'])->name('pending_posts');
     Route::put('/reject-pending-status/{jobPost}', [JobPostController::class, 'reject_status'])->name('reject_status');
     Route::put('/approved-pending-status/{jobPost}', [JobPostController::class, 'approved_status'])->name('approved_status');
+    Route::put('/application-reject/{application}', [ApplicationController::class, 'reject'])->name('application.reject');
 });
 Route::get('/dashboard-role', function () {return view('auth/dashboard-role');})->name('dashboard_role')->middleware(['auth','Create_Without_Role']);
 

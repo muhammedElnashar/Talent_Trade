@@ -100,7 +100,7 @@ $user =\Illuminate\Support\Facades\Auth::user();
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3>{{\Illuminate\Support\Facades\DB::table('employees')->count()}}</h3> <!-- Replace with dynamic value -->
-                        <p>Total Employees</p> <!-- Replace with dynamic description -->
+                        <h4>Total Employees</h4> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -113,7 +113,7 @@ $user =\Illuminate\Support\Facades\Auth::user();
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3>{{\Illuminate\Support\Facades\DB::table('candidates')->count()}}</h3> <!-- Replace with dynamic value -->
-                        <p>Total Candidates</p> <!-- Replace with dynamic description -->
+                        <h4>Total Candidates</h4> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -128,7 +128,7 @@ $user =\Illuminate\Support\Facades\Auth::user();
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3>{{\Illuminate\Support\Facades\DB::table('categories')->count()}}</h3> <!-- Replace with dynamic value -->
-                        <p>Total Categories</p> <!-- Replace with dynamic description -->
+                        <h4>Total Categories</h4> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -141,7 +141,7 @@ $user =\Illuminate\Support\Facades\Auth::user();
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3>{{\Illuminate\Support\Facades\DB::table('technologies')->count()}}</h3> <!-- Replace with dynamic value -->
-                        <p>Total Skills</p> <!-- Replace with dynamic description -->
+                        <h4>Total Skills</h4> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -154,7 +154,7 @@ $user =\Illuminate\Support\Facades\Auth::user();
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3>{{\Illuminate\Support\Facades\DB::table('job_posts')->count()}}</h3> <!-- Replace with dynamic value -->
-                        <p>Total Posts</p> <!-- Replace with dynamic description -->
+                        <h4>Total Posts</h4> <!-- Replace with dynamic description -->
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>

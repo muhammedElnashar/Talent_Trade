@@ -4,7 +4,7 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-                <a class="navbar-brand text-white"  style="font-family: 'Droid Sans Mono Dotted'; font-weight: bold;font-size: 25px" href="#">Talant Trade</a>
+                <a class="navbar-brand text-white"  style="font-family: 'Droid Sans Mono Dotted'; font-weight: bold;font-size: 25px" href="{{route('Dashboard')}}">Talant Trade</a>
 
 
             </a>
