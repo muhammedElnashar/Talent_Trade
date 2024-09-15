@@ -30,7 +30,7 @@ class CandidateController extends Controller
      */
     public function index()
     {
-        $candidates = Candidate::paginate(3);
+        $candidates = Candidate::paginate(2);
         return view('candidate.index', compact('candidates'));
     }
 

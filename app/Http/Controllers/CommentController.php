@@ -85,7 +85,6 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
     }
 
     /**

@@ -93,12 +93,17 @@ class ApplicationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Application $application)
+    public function destroy()
     {
         //user data
+
+
+    }
+    public function reject(Application $application)
+    {
         $cand = Candidate::findOrFail($application->candidate_id);
         $user = User::findOrFail($cand->user_id);
-        $application->job_status = "rejected";
+        $application->job_status = "reject";
         $application->save();
 
         //notification data
@@ -113,6 +118,5 @@ class ApplicationController extends Controller
         $job_status = $application->job_status;
         Notification::send($user, new StatusCandidateFromEmployee($username, $userImage, $created_at, $userRole, $job_id, $job_status));
         return redirect()->back();
-
     }
 }

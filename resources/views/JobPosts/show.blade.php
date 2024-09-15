@@ -153,24 +153,39 @@ Job Post Details
     $application=\App\Models\Application::where('candidate_id','=',$candidate->id)->where('job_post_id','=',$comment->job_post_id)->first();
     @endphp
     <div class="card">
-        <div class='card-header d-flex justify-content-between align-items-center'>
-            <div class="d-flex align-items-center">
+
+        <div class='card-header row'>
+
+            <div class="d-flex col-4 align-items-center">
+
                 <img src="{{ asset('images/users/' . $user->image) }}" style="width: 60px; height: 60px;"
                     class="rounded-circle styl me-2" alt="User">
                 <p class="card-text"><strong><a class="text-dark"
                             href="{{route('candidate.show',$candidate)}}">{{ $user->name }}</a></strong></p>
-            </div>
 
-            <p class="text-muted " style="font-weight:lighter">Posted on
-                {{ $comment->created_at->format('F j, Y, g:i a') }}</p>
+            </div>
+         <div class="col-4 mx-auto " style="width: fit-content">
+             @if($application->job_status === 'approved')
+                 <h4 class="bg-primary  text-white rounded-pill px-3">Approved</h4>
+             @elseif($application->job_status === 'reject')
+                 <h4 class="bg-danger text-white rounded-pill px-3">Rejected</h4>
+             @else
+                 <h4 class="shadow-lg rounded-pill px-3">Pending</h4>
+
+             @endif
+         </div >
+
+       <div class="col-3 offset-1 " >     <p class="text-muted " style="font-weight:lighter">Posted on
+               {{ $comment->created_at->format('F j, Y, g:i a') }}</p></div>
         </div>
         <div class="card-body">
             <p class="card-text">{{ $comment->body }}</p>
         </div>
+
         @php
         $employee = \App\Models\Employee::findOrFail($jobPost->employee_id);
         @endphp
-        @if(\Illuminate\Support\Facades\Auth::id() === $employee->user_id)
+        @if(\Illuminate\Support\Facades\Auth::id() === $employee->user_id )
         <div class="card-footer">
             <div class="ms-auto d-flex">
 
@@ -184,9 +199,9 @@ Job Post Details
                 </div>
 
                 <div>
-                    <form method="POST" action="{{route("application.destroy",$application)}}">
+                    <form method="POST" action="{{route("application.reject",$application)}}">
                         @csrf
-                        @method('DELETE')
+                        @method('put')
                         <input type="submit" value="Reject" class="btn rounded btn-danger px-5 fw-bold "
                             style=" color:white;border-radius:30px !important">
                     </form>

@@ -160,7 +160,7 @@
 
                                                         @foreach ($technology as $tech)
                                                             <option value="{{$tech->id}}"
-                                                                    @if(in_array($tech->id, $candidateTechnologies))  @endif>
+                                                                    @if(in_array($tech->id, $candidateTechnologies)) php  @endif>
                                                                 {{$tech->technology_name}}
                                                             </option>
                                                         @endforeach
